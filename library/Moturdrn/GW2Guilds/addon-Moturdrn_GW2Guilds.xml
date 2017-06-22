@@ -1,0 +1,1177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="Moturdrn_GW2Guilds" title="[Moturdrn] GW2 Guilds" version_string="1.1.5" version_id="1015" url="" install_callback_class="Moturdrn_GW2Guilds_Installer" install_callback_method="install" uninstall_callback_class="Moturdrn_GW2Guilds_Installer" uninstall_callback_method="uninstall">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates/>
+  <admin_template_modifications>
+    <modification template="user_group_edit" modification_key="moturdrn_gw2guilds_guildbanner" description="Adds the Guild Banner text field" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[name="banner_text" value="{$userGroup.banner_text}" maxlength="100" />]]></find>
+      <replace><![CDATA[name="banner_text" value="{$userGroup.banner_text}" maxlength="8000" />]]></replace>
+    </modification>
+  </admin_template_modifications>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="init_dependencies" execute_order="10" callback_class="Moturdrn_GW2Guilds_Listener" callback_method="init" active="1" hint="" description="Guild Helpers"/>
+    <listener event_id="load_class_datawriter" execute_order="10" callback_class="Moturdrn_GW2Guilds_Listener" callback_method="extendDataWriter" active="1" hint="" description="User DataWriter Extension"/>
+    <listener event_id="navigation_tabs" execute_order="10" callback_class="Moturdrn_GW2Guilds_Listener" callback_method="navigation_tabs" active="1" hint="middle" description=""/>
+    <listener event_id="widget_framework_ready" execute_order="10" callback_class="Moturdrn_GW2Guilds_Listener" callback_method="WidgetFrameworkReady" active="1" hint="" description=""/>
+  </code_event_listeners>
+  <cron/>
+  <email_templates/>
+  <email_template_modifications/>
+  <optiongroups/>
+  <permissions>
+    <permission_groups>
+      <permission_group permission_group_id="moturdrn_gw2guilds"/>
+    </permission_groups>
+    <permissions>
+      <permission permission_group_id="moturdrn_gw2guilds" permission_id="admin" permission_type="flag" default_value="unset" interface_group_id="moturdrn_gw2guilds" display_order="1"/>
+      <permission permission_group_id="moturdrn_gw2guilds" permission_id="createguild" permission_type="flag" default_value="unset" interface_group_id="moturdrn_gw2guilds" display_order="1"/>
+      <permission permission_group_id="moturdrn_gw2guilds" permission_id="joinguild" permission_type="flag" default_value="unset" interface_group_id="moturdrn_gw2guilds" display_order="1"/>
+    </permissions>
+    <interface_groups>
+      <interface_group interface_group_id="moturdrn_gw2guilds" display_order="999990"/>
+    </interface_groups>
+  </permissions>
+  <phrases>
+    <phrase title="moturdrn_gw2guilds_add_guild" version_id="1009" version_string="1.0.9"><![CDATA[Add Guild]]></phrase>
+    <phrase title="moturdrn_gw2guilds_current_number_of_members" version_id="1009" version_string="1.0.9"><![CDATA[Current number of members]]></phrase>
+    <phrase title="moturdrn_gw2guilds_delete_guild" version_id="1009" version_string="1.0.9"><![CDATA[Delete Guild]]></phrase>
+    <phrase title="moturdrn_gw2guilds_edit_guild" version_id="1009" version_string="1.0.9"><![CDATA[Edit Guild]]></phrase>
+    <phrase title="moturdrn_gw2guilds_guilds" version_id="1002" version_string="1.0.2"><![CDATA[Guilds]]></phrase>
+    <phrase title="moturdrn_gw2guilds_no_guilds_to_display" version_id="1009" version_string="1.0.9"><![CDATA[No Guilds to Display]]></phrase>
+    <phrase title="moturdrn_gw2guilds_provide_an_in_depth_description" version_id="1009" version_string="1.0.9"><![CDATA[Provide an in depth description of your Guild]]></phrase>
+    <phrase title="moturdrn_gw2guilds_the_name_of_your_guild" version_id="1009" version_string="1.0.9"><![CDATA[The name of your Guild]]></phrase>
+    <phrase title="moturdrn_gw2guilds_transfer_guild" version_id="1009" version_string="1.0.9"><![CDATA[Transfer Guild]]></phrase>
+    <phrase title="moturdrn_gw2guilds_x_created_guild_y" version_id="1003" version_string="1.0.3"><![CDATA[{user} created Guild {title} for approval]]></phrase>
+    <phrase title="moturdrn_gw2guilds_x_requests_guild_y_active" version_id="1003" version_string="1.0.3"><![CDATA[{user} has requested Guild {title} be made active]]></phrase>
+    <phrase title="moturdrn_gw2guilds_x_sending_request_to_join_guild_y" version_id="1010" version_string="1.1.0"><![CDATA[{user} sending request to join Guild {title}]]></phrase>
+    <phrase title="moturdrn_gw2guilds_your_guilds_tag" version_id="1009" version_string="1.0.9"><![CDATA[Your Guild's tag (do not include the square brackets, i.e. enter MM rather than [MM])]]></phrase>
+    <phrase title="moturdrn_gw2guilds_your_guilds_website" version_id="1009" version_string="1.0.9"><![CDATA[Your Guild's Website]]></phrase>
+    <phrase title="moturdrn_gw2guilds_you_are_about_to_delete" version_id="1009" version_string="1.0.9"><![CDATA[You are about to delete]]></phrase>
+    <phrase title="moturdrn_gw2guilds_you_are_about_to_transfer" version_id="1009" version_string="1.0.9"><![CDATA[You are about to Transfer]]></phrase>
+    <phrase title="permission_group_moturdrn_gw2guilds" version_id="1001" version_string="1.0.1"><![CDATA[[Moturdrn] GW2 Guilds]]></phrase>
+    <phrase title="permission_interface_moturdrn_gw2guilds" version_id="1001" version_string="1.0.1"><![CDATA[[Moturdrn] GW2 Guilds]]></phrase>
+    <phrase title="permission_moturdrn_gw2guilds_admin" version_id="1001" version_string="1.0.1"><![CDATA[Administrate Guilds]]></phrase>
+    <phrase title="permission_moturdrn_gw2guilds_createguild" version_id="1012" version_string="1.1.2"><![CDATA[Can Create Guilds]]></phrase>
+    <phrase title="permission_moturdrn_gw2guilds_joinguild" version_id="1011" version_string="1.1.1"><![CDATA[Can Join Guilds]]></phrase>
+  </phrases>
+  <route_prefixes>
+    <route_type type="public">
+      <prefix original_prefix="guilds" class="Moturdrn_GW2Guilds_Route_Prefix_Guilds" build_link="data_only"/>
+    </route_type>
+  </route_prefixes>
+  <style_properties/>
+  <templates>
+    <template title="alert_moturdrn_gw2guildsmember_join" version_id="1015" version_string="1.1.5"><![CDATA[{xen:phrase moturdrn_gw2guilds_x_sending_request_to_join_guild_y,
+	'user={xen:helper username, $user, 'subject'}',
+	'title=<a href="{xen:link 'guilds/roster', {$extra.guild}}" class="PopupItemLink">{$extra.guild.guidname} [{$extra.guild.guildtag}]</a>'}]]></template>
+    <template title="alert_moturdrn_gw2guilds_change" version_id="1015" version_string="1.1.5"><![CDATA[{xen:phrase moturdrn_gw2guilds_x_requests_guild_y_active,
+	'user={xen:helper username, $user, 'subject'}',
+	'title=<a href="{xen:link 'guilds'}" class="PopupItemLink">{$extra.guild.guidname} [{$extra.guild.guildtag}]</a>'}]]></template>
+    <template title="alert_moturdrn_gw2guilds_new" version_id="1015" version_string="1.1.5"><![CDATA[{xen:phrase moturdrn_gw2guilds_x_created_guild_y,
+	'user={xen:helper username, $user, 'subject'}',
+	'title=<a href="{xen:link 'guilds'}" class="PopupItemLink">{$extra.guild.guidname} [{$extra.guild.guildtag}]</a>'}
+]]></template>
+    <template title="moturdrn_gw2guilds_add" version_id="1009" version_string="1.0.9"><![CDATA[<xen:title>{xen:if '{$guild.guildid}', 'Edit Guild: {$guild.guidname}', 'Add New Guild'}</xen:title>
+
+<xen:if is="{$guild.guildid}">
+	<xen:navigation>
+		<xen:breadcrumb href="{xen:link canonical:guilds, $guild}">{$guild.guidname} [{$guild.guildtag}]</xen:breadcrumb>
+		<xen:breadcrumb href="{xen:link canonical:guilds/edit, $guild}">{xen:phrase moturdrn_gw2guilds_edit_guild}</xen:breadcrumb>
+	</xen:navigation>
+<xen:else />
+	<xen:navigation>
+		<xen:breadcrumb href="{xen:link canonical:guilds/add}">{xen:phrase moturdrn_gw2guilds_add_guild}</xen:breadcrumb>
+	</xen:navigation>
+</xen:if>
+<div style="background-color: {xen:property contentBackground};">
+<form action="{xen:link canonical:guilds/save, $guild}" method="post" class="AutoValidator xenForm" data-redirect="on">
+	<xen:if is="!{$guild.guildid}">
+	<fieldset>	
+		<dl class="ctrlUnit titleUnit">
+			<dt><label for="ctrl_title">Guild Name:</label></dt>
+			<dd>
+				<input type="text" name="guidname" value="{$guild.guidname}" class="textCtrl OptOut"
+					data-liveTitleTemplate="{xen:if $guild.guildid, 'Edit Guild', 'Add New Guild'}: <em>%s</em>"
+					id="ctrl_title_team_add" maxlength="100"
+				/>
+				<p class="explain">{xen:phrase moturdrn_gw2guilds_the_name_of_your_guild}</p>
+			</dd>
+		</dl>
+		
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_tag_line">Guild Tag:</label></dt>
+			<dd>
+				<input type="text" name="guildtag" value="{$guild.guildtag}" class="textCtrl OptOut" id="ctrl_tag_line" maxlength="100" />
+				<p class="explain">{xen:phrase moturdrn_gw2guilds_your_guilds_tag}</p>
+			</dd>
+		</dl>
+		
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_tag_line">Website:</label></dt>
+			<dd>
+				<input type="text" name="guildwebsite" value="{$guild.guildwebsite}" class="textCtrl OptOut" id="ctrl_tag_line" maxlength="100" />
+				<p class="explain">{xen:phrase moturdrn_gw2guilds_your_guilds_website}</p>
+			</dd>
+		</dl>
+	</fieldset>
+	<xen:else />
+		<input type="hidden" name="guildid" value="{$guild.guildid}" />
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_tag_line">Website:</label></dt>
+			<dd>
+				<input type="text" name="guildwebsite" value="{$guild.guildwebsite}" class="textCtrl OptOut" id="ctrl_tag_line" maxlength="100" />
+				<p class="explain">{xen:phrase moturdrn_gw2guilds_your_guilds_website}</p>
+			</dd>
+		</dl>
+	</xen:if>
+	
+	<fieldset>
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_message">Members:</label></dt>
+			<dd>
+				<select name="members">
+					<option value="1-50" <xen:if is="{$guild.members} == '1-50'">selected</xen:if>>1-50</option>
+					<option value="51-100" <xen:if is="{$guild.members} == '51-100'">selected</xen:if>>51-100</option>
+					<option value="101-150" <xen:if is="{$guild.members} == '101-150'">selected</xen:if>>101-150</option>
+					<option value="151-200" <xen:if is="{$guild.members} == '151-200'">selected</xen:if>>151-200</option>
+					<option value="201-250" <xen:if is="{$guild.members} == '201-250'">selected</xen:if>>201-250</option>
+					<option value="251-300" <xen:if is="{$guild.members} == '251-300'">selected</xen:if>>251-300</option>
+					<option value="301-350" <xen:if is="{$guild.members} == '301-350'">selected</xen:if>>301-350</option>
+					<option value="351-400" <xen:if is="{$guild.members} == '351-400'">selected</xen:if>>351-400</option>
+					<option value="401-450" <xen:if is="{$guild.members} == '401-450'">selected</xen:if>>401-450</option>
+					<option value="451-500" <xen:if is="{$guild.members} == '451-500'">selected</xen:if>>451-500</option>
+					<option value="501+" <xen:if is="{$guild.members} == '500+'">selected</xen:if>>500+</option>
+				</select>
+				<p class="explain">{xen:phrase moturdrn_gw2guilds_current_number_of_members}</p>
+			</dd>
+		</dl>
+	</fieldset>
+	
+	<fieldset>
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_message">PvE:</label></dt>
+			<dd>
+				No: <input type="radio" name="PvE" value="N" <xen:if is="{$guild.PvE} == 'N' || !{$guild.guildid}">checked</xen:if> /> Yes: <input type="radio" name="PvE" value="Y" <xen:if is="{$guild.PvE} == 'Y'">checked</xen:if> />
+			</dd>
+		</dl>
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_message">PvP:</label></dt>
+			<dd>
+				No: <input type="radio" name="PvP" value="N" <xen:if is="{$guild.PvP} == 'N' || !{$guild.guildid}">checked</xen:if> /> Yes: <input type="radio" name="PvP" value="Y" <xen:if is="{$guild.PvP} == 'Y'">checked</xen:if> />
+			</dd>
+		</dl>
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_message">WvW:</label></dt>
+			<dd>
+				No: <input type="radio" name="WvW" value="N" <xen:if is="{$guild.WvW} == 'N' || !{$guild.guildid}">checked</xen:if> /> Yes: <input type="radio" name="WvW" value="Y" <xen:if is="{$guild.WvW} == 'Y'">checked</xen:if> />
+			</dd>
+		</dl>
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_message">Casual:</label></dt>
+			<dd>
+				No: <input type="radio" name="Casual" value="N" <xen:if is="{$guild.Casual} == 'N' || !{$guild.guildid}">checked</xen:if> /> Yes: <input type="radio" name="Casual" value="Y" <xen:if is="{$guild.Casual} == 'Y'">checked</xen:if> />
+			</dd>
+		</dl>
+	</fieldset>
+	
+	<fieldset>
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_message">Recruitment/About:</label></dt>
+			<dd>
+				{xen:raw $editorTemplate}
+				<p class="explain">{xen:phrase moturdrn_gw2guilds_provide_an_in_depth_description}</p>
+			</dd>
+		</dl>
+	</fieldset>
+	
+	<dl class="ctrlUnit submitUnit">
+		<dt></dt>
+		<dd>
+			<input type="submit" value="{xen:phrase save}" class="button primary" accesskey="s" />
+		</dd>
+	</dl>
+	<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+</form>
+</div>]]></template>
+    <template title="moturdrn_gw2guilds_delete" version_id="1009" version_string="1.0.9"><![CDATA[<xen:title>Delete Guild: {$guild.guidname} [{$guild.guildtag}]</xen:title>
+
+<xen:navigation>
+	<xen:breadcrumb href="{xen:link canonical:guilds, $guild}">{$guild.guidname}</xen:breadcrumb>
+	<xen:breadcrumb href="{xen:link canonical:guilds/delete, $guild}">{xen:phrase moturdrn_gw2guilds_delete_guild}</xen:breadcrumb>
+</xen:navigation>
+
+<form action="{xen:link canonical:guilds/delete, $guild}" method="post" class="xenForm formOverlay">
+	<dl class="ctrlUnit">
+		<dt>{xen:phrase moturdrn_gw2guilds_you_are_about_to_delete}</dt>
+		<dd>
+			{xen:helper guildemblem, $guild}
+			<br />
+			{$guild.guidname} [{$guild.guildtag}]
+		</dd>
+	</dl>
+
+	<dl class="ctrlUnit submitUnit">
+		<dt></dt>
+		<dd><input type="submit" value="Delete Guild" class="button primary" /></dd>
+	</dl>
+	<input type="hidden" name="user_group_id" value="{$guild.user_group_id}" />
+	<input type="hidden" name="_xfConfirm" value="1" />
+	<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+</form>]]></template>
+    <template title="moturdrn_gw2guilds_guild_list_item" version_id="1004" version_string="1.0.4"><![CDATA[<li class="GuildListItem {$guild.status}" id="guild-{$guild.guildid}">
+	<div class="listBlock GuildImage">
+		<div class="listBlockInner">
+			{xen:helper guildemblem, $guild}
+
+		</div>
+	</div>
+	<div class="listBlock main">
+		<div class="listBlockInner">
+			<h3 class="title">
+				<a name="guild-{$guild.guildid}"></a><a href="{xen:link canonical:guilds, $guild}" class="TeamIcon">{$guild.guidname}</a>
+				<div class="guildTitle">
+					[{$guild.guildtag}]
+				</div>
+			</h3>
+			<xen:if is="{$guild.guildwebsite}">
+				<div class="tagLine">
+					<a href="{$guild.guildwebsite}">{$guild.guildwebsite}</a>
+				</div>
+			</xen:if>
+			<div class="tagLine">
+				{$guild.recruitmentShort}
+			</div>
+			<div class="tagLine">
+				<xen:if is="{$guild.canEdit}">
+					<xen:if is="{$guild.status} == 'Active' || {$guild.status} == 'Pending (Change)'">
+						<a href="{xen:link canonical:guilds/inactivate, $guild}" class="callToAction OverlayTrigger"><span>Set Inactive</span></a> 
+					</xen:if>
+					<xen:if is="{$guild.status} == 'Inactive'">
+						<a href="{xen:link canonical:guilds/activate, $guild}" class="callToAction OverlayTrigger"><span>Set Active</span></a> 
+					</xen:if>
+				</xen:if>
+				<xen:if is="{$guild.canJoin}">
+					<a href="{xen:link canonical:guilds/join, $guild}" class="callToAction OverlayTrigger"><span>Join</span></a> 
+				</xen:if>
+				<xen:if is="{$guild.canLeave}">
+					<a href="{xen:link canonical:guilds/leave, $guild}" class="callToAction OverlayTrigger"><span>Leave</span></a> 
+				</xen:if>
+				<xen:if is="{$guild.canEdit}">
+					<a href="{xen:link canonical:guilds/edit, $guild}" class="callToAction OverlayTrigger"><span>Edit</span></a> 
+				</xen:if>
+				<a href="{xen:link canonical:guilds/roster, $guild}" class="callToAction OverlayTrigger"><span>Roster<xen:if is="{$guild.canEdit} && {$guild.pending_count} > 0"> ({$guild.pending_count})</xen:if></span></a> 
+				<xen:if is="{$guild.canTransfer}">
+					<a href="{xen:link canonical:guilds/transfer, $guild}" class="callToAction OverlayTrigger"><span>Transfer</span></a> 
+				</xen:if>
+				<xen:if is="{$guild.canDelete}">
+					<a href="{xen:link canonical:guilds/delete, $guild}" class="callToAction OverlayTrigger"><span>Delete</span></a>
+				</xen:if>
+			</div>
+		</div>
+	</div>
+	<div class="listBlock GuildStats">
+		<div class="listBlockInner">
+			<div class="pairsJustified">
+				<dl><dt>Members:</dt> <dd>{$guild.members}</dd></dl>
+				<dl><dt>GH.eu Members:</dt> <dd>{$guild.member_count}</dd></dl>
+				<dl><dt>PvE:</dt> <dd>{$guild.PvE}</dd></dl>
+				<dl><dt>PvP:</dt> <dd>{$guild.PvP}</dd></dl>
+				<dl><dt>WvW:</dt> <dd>{$guild.WvW}</dd></dl>
+				<dl><dt>Casual:</dt> <dd>{$guild.Casual}</dd></dl>
+				<dl><dt>Status:</dt> <dd>{$guild.status}</dd></dl>
+			</div>
+		</div>
+	</div>
+</li>
+<li></li>
+<xen:require css="moturdrn_gw2guilds_list.css" />]]></template>
+    <template title="moturdrn_gw2guilds_guild_list_pending_item" version_id="1004" version_string="1.0.4"><![CDATA[<xen:require css="moturdrn_gw2guilds_member.css" />
+<li id="guild-{$guild.guildid}-{$user.user_id}" class="primaryContent memberListItem guildMemberListItem">
+	<div class="userAvatar">
+		{xen:helper guildemblem, $guild}
+	</div>
+	<div class="memberInfo">
+		<h3 class="title">{$guild.guidname} [{$guild.guildtag}]</h3>
+		<div class="tagLine muted">{$guild.status}
+		<xen:if is="{$controlAction}">
+			<div class="controlAction">
+				<ul class="controlLink">
+					{xen:raw $controlLinks}
+				</ul>
+			</div>
+		</xen:if>
+		</div>
+		<div class="details muted">
+			<span class="faint"></span>
+		</div>
+	</div>
+</li>]]></template>
+    <template title="moturdrn_gw2guilds_index" version_id="1009" version_string="1.0.9"><![CDATA[<xen:title>Guilds</xen:title>
+<xen:topctrl><xen:if is="{$myGuilds} > 0"><a href="{xen:link canonical:guilds/mine}" class="callToAction"><span>My Guilds</span></a></xen:if> <xen:if is="{$canCreate}"><a href="{xen:link canonical:guilds/add}" class="callToAction OverlayTrigger"><span>Add Guild</span></a></xen:if></xen:topctrl>
+
+<xen:require css="moturdrn_gw2guilds_list.css" />
+<xen:require css="moturdrn_gw2guilds_list_mini.css" />
+<div class="GuildListBlock">
+<div>
+	<xen:if is="{$pendingGuilds} && {$isGW2GuildsAdmin}">
+	<div class="memberListMain">
+	<div class="section">
+		<ol class="memberListItems">
+			<li class="primaryContent">Pending Guild Requests</li>
+			<xen:foreach loop="$pendingGuilds" value="$guild">
+				<xen:include template="moturdrn_gw2guilds_guild_list_pending_item">
+					<xen:set var="$controlAction">1</xen:set>
+					<xen:set var="$controlLinks">
+						<xen:if is="{$guild.status} == 'Pending (Change)'">
+							<li><a href="{xen:link canonical:guilds/activate, $guild}" class="OverlayTrigger"><span class="control promote">Set Active</span></a></li>
+							<li><a href="{xen:link canonical:guilds/inactivate, $guild, 't={$visitor.csrf_token_page}'}" class="OverlayTrigger removeLink"><span class="control remove">Set Inactive</span></a></li>
+						<xen:else />
+							<li><a href="{xen:link canonical:guilds/activate, $guild}" class="OverlayTrigger"><span class="control promote">Set Active</span></a></li>
+							<li><a href="{xen:link canonical:guilds/delete, $guild, 'user_group_id={$guild.user_group_id}'}" class="OverlayTrigger removeLink"><span class="control remove">Delete</span></a></li>
+						</xen:if>
+					</xen:set>
+				</xen:include>
+			</xen:foreach>
+		</ol>
+	</div>
+	</div>
+	</xen:if>
+	<ol class="guildList">
+	<xen:if is="{$guilds}">
+		<xen:foreach loop="$guilds" value="$guild">
+			<xen:include template="moturdrn_gw2guilds_guild_list_item"></xen:include>
+		</xen:foreach>
+	<xen:else />
+		<li class="primaryContent">{xen:phrase moturdrn_gw2guilds_no_guilds_to_display}</li>
+	</xen:if>
+	</ol>
+</div>
+</div>]]></template>
+    <template title="moturdrn_gw2guilds_list.css" version_id="1002" version_string="1.0.2"><![CDATA[.GuildListMain
+{
+	margin-left: 230px;
+}
+
+.GuildListItem
+{
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+	word-wrap: normal;
+
+	{xen:property primaryContent.background}
+
+	{xen:property primaryContent.border}
+}
+
+	.GuildListItem .listBlock
+	{
+		display: table-cell;
+		vertical-align: middle;
+	}
+
+	.GuildListItem .listBlockInner
+	{
+		padding: 10px;
+	}
+
+	.GuildListItem .GuildImage
+	{
+		width: {xen:calc '48 + 3*2 + 5*2'}px;
+	}
+
+		.GuildListItem .GuildImage .listBlockInner
+		{
+			padding: 5px;
+			position: relative;
+		}
+		
+		.GuildListItem .GuildImage img.GuildIcon
+		{
+			width: 64px;
+			height: 64px;
+		}
+
+	.GuildListItem .main
+	{
+		width: auto;
+	}
+
+		.GuildListItem .main .title
+		{
+			font-size: 11pt;
+			font-weight: bold;
+		}
+
+		.GuildListItem .main .extra
+		{
+			font-size: 11px;
+			float: right;
+			margin-left: 5px;
+		}
+		
+		.GuildListItem .main .cost
+		{
+			font-size: 9px;
+			float: right;
+			color: {xen:property primaryLightish};
+			background-color: {xen:property primaryLightest};
+			border: 1px solid {xen:property primaryLighter};
+			border-radius: 3px;
+			padding: 1px;
+			margin-top: 3px;
+			margin-left: 5px;
+		}
+
+		.GuildListItem .iconKey span
+		{
+			{xen:property dicussionListIcon}
+		}
+			
+			.GuildListItem .iconKey .moderated { background-position: -32px -16px; }
+			.GuildListItem .iconKey .deleted { background-position: -64px -32px; }
+
+
+		.GuildListItem .main .version
+		{
+			color: {xen:property mutedTextColor};
+			font-weight: normal;
+		}
+
+		.GuildListItem .main .GuildDetails
+		{
+			font-size: 11px;
+		}
+		
+		.GuildListItem .main .tagLine
+		{
+			font-size: 11px;
+			margin-top: .5em;
+		}
+
+	.GuildListItem .GuildStats
+	{
+		width: 200px;
+		font-size: 11px;
+	}
+
+		.GuildListItem .GuildStats dt
+		{
+			color: {xen:property mutedTextColor};
+		}
+
+		.GuildListItem .GuildStats .Hint
+		{
+			float: right;
+		}
+
+	.GuildListItem.Inactive
+	{
+		opacity: 0.4;
+		filter: alpha(opacity='40');
+	}
+	
+/** IE <8 **/
+.GuildListItem               { *display: block; _vertical-align: bottom; }
+.GuildListItem .listBlock    { *display: block; *float: left; _height: 52px; *min-height: 52px; }
+.GuildListItem .GuildImage { *width: 10.98%; *font-size: 0; }
+.GuildListItem .main         { *width: 59.98%; }
+.GuildListItem .GuildStats { *width: 28.97%; }
+
+.listBlock .guildTitle
+{
+	display: inline-block;
+}
+.listBlock .guildTitle span
+{
+	position: relative;
+	top: -2px;
+	margin-right: 2px;
+}
+
+.listBlock .guildTitle
+{
+	font-size: 10px;
+}
+<xen:if is="{xen:property enableResponsive}">
+@media (max-width:{xen:property maxResponsiveWideWidth})
+{
+	.Responsive .GuildListBlock
+	{
+		display: table;
+		table-layout: fixed;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.Responsive .GuildListBlock .GuildListMain 
+	{
+		display: table-header-group;
+
+		margin-left: 0;
+		border-left: none;
+		border-bottom: 1px solid {xen:property primaryLighter};
+		padding-bottom: 10px;
+	}
+}
+
+@media (max-width:{xen:property maxResponsiveNarrowWidth})
+{
+	.Responsive .GuildListItem .listBlock.main,
+	.Responsive .GuildListItem .listBlock.GuildStats
+	{
+		display: block;
+	}
+	
+	.Responsive .GuildListItem .listBlock.main .listBlockInner
+	{
+		padding-bottom: 0;
+	}
+	
+	.Responsive .GuildListItem .listBlock.GuildStats
+	{
+		width: auto;
+		background: transparent;
+	}
+	
+		.Responsive .GuildListItem .listBlock.GuildStats .listBlockInner
+		{
+			overflow: hidden;
+			padding-top: 3px;
+		}
+}
+
+@media (max-width:340px)
+{
+	.Responsive .GuildListBlock > *
+	{
+		max-width: none;
+	}
+	
+	.Responsive .listBlock .guildTitle span
+	{
+		display: none;
+	}
+}
+</xen:if>]]></template>
+    <template title="moturdrn_gw2guilds_list_mini.css" version_id="1002" version_string="1.0.2"><![CDATA[.miniGuildList li
+{
+	margin-bottom: 1em;
+}
+
+.miniGuildList .guildTitle
+{
+	font-weight: bold;
+	margin-right: 5px;
+}]]></template>
+    <template title="moturdrn_gw2guilds_member.css" version_id="1002" version_string="1.0.2"><![CDATA[.memberListMain .section
+{
+	margin: 0;
+}
+.memberListMain
+{
+	overflow: hidden;
+	margin-bottom: 10px;
+	height: auto;
+	margin: 10px auto;
+}
+
+	.memberListMain .guildMemberListItem
+	{
+		{xen:property secondaryContent}
+		float: left;
+		margin: 0 5px 5px 0;
+		box-sizing: border-box;
+		width: 300px;
+		max-width: 100%;
+		padding: 5px;
+		box-shadow: 1px 1px 3px rgba(0,0,0, 0.25);
+		border: 1px solid {xen:property primaryLighter};
+		border-radius: 5px;
+	}
+		
+		.memberListMain .guildMemberListItem .prefix
+		{
+			max-width: 100%;
+			box-sizing: border-box;
+			overflow: hidden;
+			word-wrap: normal;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			vertical-align: bottom;
+		}
+
+		.memberListMain .guildMemberListItem .memberInfo
+		{
+			height: {xen:calc '96 + {xen:property avatar.padding-top} + {xen:property avatar.padding-bottom} + {xen:property avatar.border-top-width} + {xen:property avatar.border-bottom-width}'}px;
+			padding-left: 5px;
+			overflow: hidden;
+			position: relative;
+		}
+
+			.memberListMain .guildMemberListItem .memberInfo .controlPopup
+			{
+				top: 5px;
+				display: inline-block;
+				float: right;
+			}
+		.memberListMain .guildMemberListItem .userAvatar
+		{
+			float: left;
+		}
+
+			.memberListMain .guildMemberListItem .userAvatar img
+			{
+				display: block;
+				width: 96px;
+				height: 96px;
+			}
+			
+			.memberListMain .guildMemberListItem .userAvatar .resourceIcon img
+			{
+				{xen:property avatar}
+			}
+
+		.memberListMain .guildMemberListItem .title
+		{
+			font-weight: bold;
+			font-size: 15px;
+			line-height: 18px;
+			max-height: 36px;
+			overflow: hidden;
+			padding: 3px 0;
+		}
+
+		.memberListMain .guildMemberListItem .tagLine
+		{
+			font-size: 11px;
+			line-height: 14px;
+			max-height: 28px;
+			overflow: hidden;
+		}
+
+		.memberListMain .guildMemberListItem .details
+		{
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			margin-top: 10px;
+			font-size: 11px;
+			margin-left: 5px;
+			word-wrap: normal;
+			overflow: hidden;
+			max-width: 100%;
+			text-overflow: ellipsis;
+		}
+		
+.controlAction .controlLink li 
+{
+	display: inline-block;
+}
+.controlAction .controlLink li:last-child
+{
+	float: right;
+}
+.assignForm .button
+{
+	position: relative;
+	top: -2px;
+}]]></template>
+    <template title="moturdrn_gw2guilds_member_list_item" version_id="1002" version_string="1.0.2"><![CDATA[<xen:require css="moturdrn_gw2guilds_member.css" />
+<li id="member-{$guild.guildid}-{$user.user_id}" class="primaryContent memberListItem guildMemberListItem">
+	<div class="userAvatar">
+		<xen:avatar user="$user" size="m" img="true" />
+	</div>
+	<div class="memberInfo">
+		<h3 class="title"><xen:username user="{$user}" /></h3>
+		<xen:if is="{$showAccNames}"><div class="tagLine">{$user.GW2AccName}</div></xen:if>
+		<div class="tagLine muted">{xen:raw $user.positionPhrase}
+		<xen:if is="{$controlAction}">
+			<div class="controlAction">
+				<ul class="controlLink">
+					{xen:raw $controlLinks}
+				</ul>
+			</div>
+		</xen:if>
+		</div>
+		<div class="details muted">
+			<span class="faint">Last Active: <xen:datetime time="{$user.last_activity}" /></span>
+		</div>
+	</div>
+</li>]]></template>
+    <template title="moturdrn_gw2guilds_mine" version_id="1002" version_string="1.0.2"><![CDATA[<xen:title>Guilds</xen:title>
+<xen:topctrl><a href="{xen:link canonical:guilds}" class="callToAction"><span>All Guilds</span></a> <xen:if is="{$canCreate}"><a href="{xen:link canonical:guilds/add}" class="callToAction OverlayTrigger"><span>Add Guild</span></a></xen:if></xen:topctrl>
+
+<xen:require css="moturdrn_gw2guilds_list.css" />
+<xen:require css="moturdrn_gw2guilds_list_mini.css" />
+<div class="GuildListBlock">
+<div>
+	<ol class="guildList">
+	<xen:if is="{$guilds}">
+		<xen:foreach loop="$guilds" value="$guild">
+			<xen:include template="moturdrn_gw2guilds_mine_list_item"></xen:include>
+		</xen:foreach>
+	<xen:else />
+		<li class="primaryContent">No Guilds to Display</li>
+	</xen:if>
+	</ol>
+</div>
+</div>]]></template>
+    <template title="moturdrn_gw2guilds_mine_list_item" version_id="1004" version_string="1.0.4"><![CDATA[<li class="GuildListItem {$guild.status}" id="guild-{$guild.guildid}">
+	<div class="listBlock GuildImage">
+		<div class="listBlockInner">
+			{xen:helper guildemblem, $guild}
+		</div>
+	</div>
+	<div class="listBlock main">
+		<div class="listBlockInner">
+			<h3 class="title">
+				<a name="guild-{$guild.guildid}"></a><a href="{xen:link canonical:guilds, $guild}" class="TeamIcon">{$guild.guidname}</a>
+				<div class="guildTitle">
+					[{$guild.guildtag}]
+				</div>
+			</h3>
+			<xen:if is="{$guild.guildwebsite}">
+				<div class="tagLine">
+					<a href="{$guild.guildwebsite}">{$guild.guildwebsite}</a>
+				</div>
+			</xen:if>
+			<div class="tagLine">
+				{$guild.recruitmentShort}
+			</div>
+			<div class="tagLine">
+				<xen:if is="{$guild.canEdit}">
+					<xen:if is="{$guild.status} == 'Active' || {$guild.status} == 'Pending (Change)'">
+						<a href="{xen:link canonical:guilds/inactivate, $guild}" class="callToAction OverlayTrigger"><span>Set Inactive</span></a> 
+					</xen:if>
+					<xen:if is="{$guild.status} == 'Inactive'">
+						<a href="{xen:link canonical:guilds/activate, $guild}" class="callToAction OverlayTrigger"><span>Set Active</span></a> 
+					</xen:if>
+				</xen:if>
+				<xen:if is="{$guild.canJoin}">
+					<a href="{xen:link canonical:guilds/join, $guild}" class="callToAction OverlayTrigger"><span>Join</span></a> 
+				</xen:if>
+				<xen:if is="{$guild.canLeave}">
+					<a href="{xen:link canonical:guilds/leave, $guild}" class="callToAction OverlayTrigger"><span>Leave</span></a> 
+				</xen:if>
+				<xen:if is="{$guild.canEdit}">
+					<a href="{xen:link canonical:guilds/edit, $guild}" class="callToAction OverlayTrigger"><span>Edit</span></a> 
+				</xen:if>
+				<a href="{xen:link canonical:guilds/roster, $guild}" class="callToAction OverlayTrigger"><span>Roster<xen:if is="{$guild.canEdit} && {$guild.pending_count} > 0"> ({$guild.pending_count})</xen:if></span></a> 
+				<xen:if is="{$guild.canTransfer}">
+					<a href="{xen:link canonical:guilds/transfer, $guild}" class="callToAction OverlayTrigger"><span>Transfer</span></a> 
+				</xen:if>
+				<xen:if is="{$guild.canDelete}">
+					<a href="{xen:link canonical:guilds/delete, $guild}" class="callToAction OverlayTrigger"><span>Delete</span></a>
+				</xen:if>
+			</div>
+		</div>
+	</div>
+	<div class="listBlock GuildStats">
+		<div class="listBlockInner">
+			<div class="pairsJustified">
+				<dl><dt>Members:</dt> <dd>{$guild.members}</dd></dl>
+				<dl><dt>GH.eu Members:</dt> <dd>{$guild.member_count}</dd></dl>
+				<dl><dt>PvE:</dt> <dd>{$guild.PvE}</dd></dl>
+				<dl><dt>PvP:</dt> <dd>{$guild.PvP}</dd></dl>
+				<dl><dt>WvW:</dt> <dd>{$guild.WvW}</dd></dl>
+				<dl><dt>Casual:</dt> <dd>{$guild.Casual}</dd></dl>
+				<dl><dt>Status:</dt> <dd>{$guild.status}</dd></dl>
+			</div>
+		</div>
+	</div>
+</li>
+<li></li>
+<xen:require css="Moturdrn_GW2Guilds_List.css" />]]></template>
+    <template title="moturdrn_gw2guilds_roster" version_id="1008" version_string="1.0.8"><![CDATA[<xen:title>{$guild.guidname} [{$guild.guildtag}]</xen:title>
+<xen:navigation>
+	<xen:breadcrumb href="{xen:link canonical:guilds, $guild}">{$guild.guidname} [{$guild.guildtag}]</xen:breadcrumb>
+	<xen:breadcrumb href="{xen:link canonical:guilds/roster, $guild}">Roster</xen:breadcrumb>
+</xen:navigation>
+<xen:require css="moturdrn_gw2guilds_list.css" />
+<div class="GuildListBlock" style="background-color: {xen:property contentBackground};">
+<div>
+	<ol class="guildList">
+		<li class="GuildListItem">
+			<div class="listBlock GuildImage">
+				<div class="listBlockInner">
+					{xen:helper guildemblem, $guild}
+				</div>
+			</div>
+			<div class="listBlock main">
+				<div class="listBlockInner">
+					<h3 class="title">
+						<a name="guild-{$guild.guildid}"></a><a href="{xen:link canonical:guilds, $guild}" class="TeamIcon">{$guild.guidname}</a>
+						<div class="guildTitle">
+							[{$guild.guildtag}]
+						</div>
+					</h3>
+					<xen:if is="{$guild.guildwebsite}">
+						<div class="tagLine">
+							<a href="{$guild.guildwebsite}">{$guild.guildwebsite}</a>
+						</div>
+					</xen:if>
+					<xen:if is="!{$Mini}">
+					<div class="tagLine">
+						<xen:if is="{$guild.canEdit}">
+							<xen:if is="{$guild.status} == 'Active' || {$guild.status} == 'Pending (Change)'">
+								<a href="{xen:link canonical:guilds/inactivate, $guild}" class="callToAction OverlayTrigger"><span>Set Inactive</span></a> 
+							</xen:if>
+							<xen:if is="{$guild.status} == 'Inactive'">
+								<a href="{xen:link canonical:guilds/activate, $guild}" class="callToAction OverlayTrigger"><span>Set Active</span></a> 
+							</xen:if>
+						</xen:if>
+						<xen:if is="{$guild.canJoin}">
+							<a href="{xen:link canonical:guilds/join, $guild}" class="callToAction OverlayTrigger"><span>Join</span></a> 
+						</xen:if>
+						<xen:if is="{$guild.canLeave}">
+							<a href="{xen:link canonical:guilds/leave, $guild}" class="callToAction OverlayTrigger"><span>Leave</span></a> 
+						</xen:if>
+						<xen:if is="{$guild.canEdit}">
+							<a href="{xen:link canonical:guilds/edit, $guild}" class="callToAction OverlayTrigger"><span>Edit</span></a> 
+						</xen:if>
+						<a href="{xen:link canonical:guilds, $guild}" class="callToAction"><span>Info</span></a>
+						<xen:if is="{$guild.canTransfer}">
+							<a href="{xen:link canonical:guilds/transfer, $guild}" class="callToAction OverlayTrigger"><span>Transfer</span></a> 
+						</xen:if>
+						<xen:if is="{$guild.canDelete}">
+							<a href="{xen:link canonical:guilds/delete, $guild}" class="callToAction OverlayTrigger"><span>Delete</span></a>
+						</xen:if>
+					</div>
+					</xen:if>
+				</div>
+			</div>
+			<div class="listBlock GuildStats">
+				<div class="listBlockInner">
+					<div class="pairsJustified">
+						<dl><dt>Members:</dt> <dd>{$guild.members}</dd></dl>
+						<dl><dt>GH.eu Members:</dt> <dd>{$guild.member_count}</dd></dl>
+						<dl><dt>PvE:</dt> <dd>{$guild.PvE}</dd></dl>
+						<dl><dt>PvP:</dt> <dd>{$guild.PvP}</dd></dl>
+						<dl><dt>WvW:</dt> <dd>{$guild.WvW}</dd></dl>
+						<dl><dt>Casual:</dt> <dd>{$guild.Casual}</dd></dl>
+						<dl><dt>Status:</dt> <dd>{$guild.status}</dd></dl>
+					</div>
+				</div>
+			</div>
+		</li>
+	</ol>
+</div>
+</div>
+<xen:require css="moturdrn_gw2guilds_member.css" />
+<div style="background-color: {xen:property contentBackground};">
+<xen:if is="{$guild.accessLevel} >= 30">
+<div class="pageNavLinkGroup">
+			<form action="{xen:link 'guilds/members/assign', $guild}" method="post" class="AutoValidator xenForm formOverlay" data-redirect="on" id="assignPeople">
+				<div class="assignForm">
+					<input type="text" name="username" value="" class="textCtrl AutoComplete AcSingle" id="ctrl_username" placeholder="{xen:phrase name}..." />
+					<input type="submit" value="Add" class="button primary" accesskey="s" />
+				</div>
+				<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+			</form>
+</div>
+<div class="memberListMain">
+<div>
+	<ol class="memberListItems">
+		<li class="primaryContent">Pending</li>
+		<xen:if is="{$pending}">	
+			<xen:foreach loop="$pending" value="$user">
+				<xen:include template="moturdrn_gw2guilds_member_list_item">
+					<xen:set var="$controlAction"><xen:if is="({$guild.accessLevel} >= 30 && {$visitor.user_id} != {$user.user_id})">1</xen:if></xen:set>
+					<xen:set var="$controlLinks">
+						<xen:if is="{$guild.accessLevel} >= 30">
+							<li><a href="{xen:link canonical:guilds/members/promote, $guild, 'user_id={$user.user_id}'}" class="OverlayTrigger"><span class="control promote">Promote to Member</span></a></li>
+						</xen:if>
+						<xen:if is="{$user.user_id} != {$visitor.user_id}">
+							<xen:if is="{$guild.accessLevel} >= 30">
+								<li><a href="{xen:link canonical:guilds/members/remove, $guild, 'user_id={$user.user_id}', 't={$visitor.csrf_token_page}'}" class="OverlayTrigger removeLink"><span class="control remove">Remove</span></a></li>
+							</xen:if>
+						</xen:if>
+					</xen:set>
+				</xen:include>
+			</xen:foreach>
+		<xen:else />
+			<li class="primaryContent">There are no pending join requests</li>
+		</xen:if>
+	</ol>
+</div>
+</div>
+</xen:if>
+<div class="memberListMain">
+<div>
+	<ol class="memberListItems">
+		<li class="primaryContent">Leader</li>
+		<xen:if is="{$leader}">	
+			<xen:foreach loop="$leader" value="$user">
+				<xen:include template="moturdrn_gw2guilds_member_list_item">
+					<xen:set var="$controlAction"><xen:if is="(({$canPromote} && {$visitor.user_id} != {$user.user_id} && {$user.user_id} != {$team.user_id}) || ({$canRemove} && {$visitor.user_id} != {$user.user_id} && {$user.user_id} != {$team.user_id}))">1</xen:if></xen:set>
+				</xen:include>
+			</xen:foreach>
+		</xen:if>
+	</ol>
+</div>
+</div>
+<div class="memberListMain">
+<div>
+	<ol class="memberListItems">
+		<li class="primaryContent">Officers</li>
+		<xen:if is="{$officers}">	
+			<xen:foreach loop="$officers" value="$user">
+				<xen:include template="moturdrn_gw2guilds_member_list_item">
+					<xen:set var="$controlAction"><xen:if is="({$guild.accessLevel} >= 40 && {$visitor.user_id} != {$user.user_id})">1</xen:if></xen:set>
+					<xen:set var="$controlLinks">
+						<xen:if is="{$user.user_id} != {$visitor.user_id}">
+							<xen:if is="{$guild.accessLevel} >= 40">
+								<li><a href="{xen:link canonical:guilds/members/demote, $guild, 'user_id={$user.user_id}'}" class="OverlayTrigger"><span class="control promote">Demote to Member</span></a></li>
+							</xen:if>
+							<xen:if is="{$guild.accessLevel} >= 40">
+								<li><a href="{xen:link canonical:guilds/members/remove, $guild, 'user_id={$user.user_id}', 't={$visitor.csrf_token_page}'}" class="OverlayTrigger removeLink"><span class="control remove">Remove</span></a></li>
+							</xen:if>
+						</xen:if>
+					</xen:set>
+				</xen:include>
+			</xen:foreach>
+		<xen:else />
+			<li class="primaryContent">There are no Guild Officers</li>
+		</xen:if>
+	</ol>
+</div>
+</div>
+<div class="memberListMain">
+<div>
+	<ol class="memberListItems">
+		<li class="primaryContent">Members</li>
+		<xen:if is="{$members}">	
+			<xen:foreach loop="$members" value="$user">
+				<xen:include template="moturdrn_gw2guilds_member_list_item">
+					<xen:set var="$controlAction"><xen:if is="({$guild.accessLevel} >= 30 && {$visitor.user_id} != {$user.user_id})">1</xen:if></xen:set>
+					<xen:set var="$controlLinks">
+						<xen:if is="{$guild.accessLevel} >= 40">
+							<li><a href="{xen:link canonical:guilds/members/promote, $guild, 'user_id={$user.user_id}'}" class="OverlayTrigger"><span class="control promote">Promote to Officer</span></a></li>
+						</xen:if>
+						<xen:if is="{$user.user_id} != {$visitor.user_id}">
+							<xen:if is="{$guild.accessLevel} >= 30">
+								<li><a href="{xen:link canonical:guilds/members/remove, $guild, 'user_id={$user.user_id}', 't={$visitor.csrf_token_page}'}" class="OverlayTrigger removeLink"><span class="control remove">Remove</span></a></li>
+							</xen:if>
+						</xen:if>
+					</xen:set>
+				</xen:include>
+			</xen:foreach>
+		<xen:else />
+			<li class="primaryContent">There are no ordinary members</li>
+		</xen:if>
+	</ol>
+</div>
+</div>
+</div>]]></template>
+    <template title="moturdrn_gw2guilds_transfer" version_id="1009" version_string="1.0.9"><![CDATA[<xen:title>Transfer Guild: {$guild.guidname} [{$guild.guildtag}]</xen:title>
+
+<xen:navigation>
+	<xen:breadcrumb href="{xen:link canonical:guilds, $guild}">{$guild.guidname}</xen:breadcrumb>
+	<xen:breadcrumb href="{xen:link canonical:guilds/transfer, $guild}">{xen:phrase moturdrn_gw2guilds_transfer_guild}</xen:breadcrumb>
+</xen:navigation>
+
+<form action="{xen:link canonical:guilds/transfer, $guild}" method="post" class="xenForm formOverlay">
+	<dl class="ctrlUnit">
+		<dt>{xen:phrase moturdrn_gw2guilds_you_are_about_to_transfer}</dt>
+		<dd>
+			{xen:helper guildemblem, $guild}
+			<br />
+			{$guild.guidname} [{$guild.guildtag}]
+		</dd>
+	</dl>
+	<dl class="ctrlUnit">
+		<dt>Transfer to:</dt>
+		<dd><input type="text" name="username" value="" class="textCtrl AutoComplete AcSingle" id="ctrl_username" placeholder="{xen:phrase name}..." /></dd>
+		<dt>Old Leader Status:</dt>
+		<dd>Officer <input type="radio" name="action" value="Officer" checked /> Member <input type="radio" name="action" value="Member" /> Remove <input type="radio" name="action" value="Remove" /></dd>
+	</dl>
+	<dl class="ctrlUnit submitUnit">
+		<dt></dt>
+		<dd><input type="submit" value="Transfer Guild" class="button primary" /></dd>
+	</dl>
+	<input type="hidden" name="user_group_id" value="{$guild.user_group_id}" />
+	<input type="hidden" name="_xfConfirm" value="1" />
+	<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+</form>]]></template>
+    <template title="moturdrn_gw2guilds_view" version_id="1004" version_string="1.0.4"><![CDATA[<xen:title>{$guild.guidname} [{$guild.guildtag}]</xen:title>
+<xen:navigation>
+	<xen:breadcrumb href="{xen:link canonical:guilds, $guild}">{$guild.guidname} [{$guild.guildtag}]</xen:breadcrumb>
+</xen:navigation>
+<xen:require css="moturdrn_gw2guilds_list.css" />
+<div class="GuildListBlock" style="background-color: {xen:property contentBackground};">
+<div>
+	<ol class="guildList">
+		<li class="GuildListItem">
+			<div class="listBlock GuildImage">
+				<div class="listBlockInner">
+					{xen:helper guildemblem, $guild}
+				</div>
+			</div>
+			<div class="listBlock main">
+				<div class="listBlockInner">
+					<h3 class="title">
+						<span class="TeamIcon">{$guild.guidname}</span>
+						<div class="guildTitle">
+							[{$guild.guildtag}]
+						</div>
+					</h3>
+					<xen:if is="{$guild.guildwebsite}">
+						<div class="tagLine">
+							<a href="{$guild.guildwebsite}">{$guild.guildwebsite}</a>
+						</div>
+					</xen:if>
+					<div class="tagLine">
+						<xen:if is="{$guild.canEdit}">
+							<xen:if is="{$guild.status} == 'Active' || {$guild.status} == 'Pending (Change)'">
+								<a href="{xen:link canonical:guilds/inactivate, $guild}" class="callToAction OverlayTrigger"><span>Set Inactive</span></a> 
+							</xen:if>
+							<xen:if is="{$guild.status} == 'Inactive'">
+								<a href="{xen:link canonical:guilds/activate, $guild}" class="callToAction OverlayTrigger"><span>Set Active</span></a> 
+							</xen:if>
+						</xen:if>
+						<xen:if is="{$guild.canJoin}">
+							<a href="{xen:link canonical:guilds/join, $guild}" class="callToAction OverlayTrigger"><span>Join</span></a> 
+						</xen:if>
+						<xen:if is="{$guild.canLeave}">
+							<a href="{xen:link canonical:guilds/leave, $guild}" class="callToAction OverlayTrigger"><span>Leave</span></a> 
+						</xen:if>
+						<xen:if is="{$guild.canEdit}">
+							<a href="{xen:link canonical:guilds/edit, $guild}" class="callToAction OverlayTrigger"><span>Edit</span></a> 
+						</xen:if>
+						<a href="{xen:link canonical:guilds/roster, $guild}" class="callToAction"><span>Roster<xen:if is="{$guild.canEdit} && {$guild.pending_count} > 0"> ({$guild.pending_count})</xen:if></span></a> 
+						<xen:if is="{$guild.canTransfer}">
+							<a href="{xen:link canonical:guilds/transfer, $guild}" class="callToAction OverlayTrigger"><span>Transfer</span></a> 
+						</xen:if>
+						<xen:if is="{$guild.canDelete}">
+							<a href="{xen:link canonical:guilds/delete, $guild}" class="callToAction OverlayTrigger"><span>Delete</span></a>
+						</xen:if>
+					</div>
+				</div>
+			</div>
+			<div class="listBlock GuildStats">
+				<div class="listBlockInner">
+					<div class="pairsJustified">
+						<dl><dt>Members:</dt> <dd>{$guild.members}</dd></dl>
+						<dl><dt>GH.eu Members:</dt> <dd>{$guild.member_count}</dd></dl>
+						<dl><dt>PvE:</dt> <dd>{$guild.PvE}</dd></dl>
+						<dl><dt>PvP:</dt> <dd>{$guild.PvP}</dd></dl>
+						<dl><dt>WvW:</dt> <dd>{$guild.WvW}</dd></dl>
+						<dl><dt>Casual:</dt> <dd>{$guild.Casual}</dd></dl>
+						<dl><dt>Status:</dt> <dd>{$guild.status}</dd></dl>
+					</div>
+				</div>
+			</div>
+		</li>
+	</ol>
+	<ol class="guildList">
+		<li class="GuildListItem">
+			<div class="listBlockInner">
+				{xen:raw $guild.recruitmentHtml}
+			</div>
+		</li>
+	</ol>
+</div>
+</div>]]></template>
+    <template title="moturdrn_gw2guilds_view_mini" version_id="1004" version_string="1.0.4"><![CDATA[<xen:title>{$guild.guidname} [{$guild.guildtag}]</xen:title>
+<xen:navigation>
+	<xen:breadcrumb href="{xen:link canonical:guilds, $guild}">{$guild.guidname} [{$guild.guildtag}]</xen:breadcrumb>
+</xen:navigation>
+<xen:require css="moturdrn_gw2guilds_list.css" />
+<div class="GuildListBlock" style="background-color: {xen:property contentBackground};">
+<div>
+	<ol class="guildList">
+		<li class="GuildListItem">
+			<div class="listBlock GuildImage">
+				<div class="listBlockInner">
+					{xen:helper guildemblem, $guild}
+				</div>
+			</div>
+			<div class="listBlock main">
+				<div class="listBlockInner">
+					<h3 class="title">
+						<span class="TeamIcon">{$guild.guidname}</span>
+						<div class="guildTitle">
+							[{$guild.guildtag}]
+						</div>
+					</h3>
+					<xen:if is="{$guild.guildwebsite}">
+						<div class="tagLine">
+							<a href="{$guild.guildwebsite}">{$guild.guildwebsite}</a>
+						</div>
+					</xen:if>
+				</div>
+			</div>
+			<div class="listBlock GuildStats">
+				<div class="listBlockInner">
+					<div class="pairsJustified">
+						<dl><dt>Members:</dt> <dd>{$guild.members}</dd></dl>
+						<dl><dt>GH.eu Members:</dt> <dd>{$guild.member_count}</dd></dl>
+						<dl><dt>PvE:</dt> <dd>{$guild.PvE}</dd></dl>
+						<dl><dt>PvP:</dt> <dd>{$guild.PvP}</dd></dl>
+						<dl><dt>WvW:</dt> <dd>{$guild.WvW}</dd></dl>
+						<dl><dt>Casual:</dt> <dd>{$guild.Casual}</dd></dl>
+						<dl><dt>Status:</dt> <dd>{$guild.status}</dd></dl>
+					</div>
+				</div>
+			</div>
+		</li>
+	</ol>
+	<ol class="guildList">
+		<li class="GuildListItem">
+			<div class="listBlockInner">
+				{xen:raw $guild.recruitmentShort}
+			</div>
+		</li>
+	</ol>
+	<ol class="guildList">
+		<li class="GuildListItem">
+			<div class="listBlockInner">
+				<a href="{xen:link canonical:guilds, $guild}">View Guild Page</a>
+			</div>
+		</li>
+	</ol>
+</div>
+</div>]]></template>
+    <template title="moturdrn_gw2guilds_widget" version_id="1011" version_string="1.1.1"><![CDATA[<xen:if is="{$guild}">
+<div style="text-align: center;">
+	{xen:helper guildemblem, $guild}<br />
+	<h3 class="title"><a data-href="{xen:link canonical:guilds/ViewMini, $guild}" href="{xen:link canonical:guilds, $guild}" class="OverlayTrigger"><b>{$guild.guidname} [{$guild.guildtag}]</b></a></h3>
+</div>
+<table style="text-align: center; width: 100%;">
+	<tr>
+		<th style="text-align: center; width: 50%;">Members</th>
+		<th style="text-align: center; width: 50%;">GH.eu Members</th>
+	</tr>
+	<tr>
+		<td style="text-align: center;">{$guild.members}</td>
+		<td style="text-align: center;">{$guild.member_count}</td>
+	</tr>
+</table><br />
+<table style="text-align: center; width: 100%;">
+	<tr>
+		<th style="text-align: center; width: 25%;">WvW</th>
+		<th style="text-align: center; width: 25%;">PvE</th>
+		<th style="text-align: center; width: 25%;">PvP</th>
+		<th style="text-align: center; width: 25%;">Casual</th>
+	</tr>
+	<tr>
+		<td style="text-align: center;"><xen:if is="{$guild.WvW} == 'Y'"><i class="fa fa-check" style="color: #57a957;"></i><xen:else /><i class="fa fa-times" style="color: #dd514c;"></i></xen:if></td>
+		<td style="text-align: center;"><xen:if is="{$guild.PvE} == 'Y'"><i class="fa fa-check" style="color: #57a957;"></i><xen:else /><i class="fa fa-times" style="color: #dd514c;"></i></xen:if></td>
+		<td style="text-align: center;"><xen:if is="{$guild.PvP} == 'Y'"><i class="fa fa-check" style="color: #57a957;"></i><xen:else /><i class="fa fa-times" style="color: #dd514c;"></i></xen:if></td>
+		<td style="text-align: center;"><xen:if is="{$guild.Casual} == 'Y'"><i class="fa fa-check" style="color: #57a957;"></i><xen:else /><i class="fa fa-times" style="color: #dd514c;"></i></xen:if></td>
+	</tr>
+</table>
+<xen:else />
+<div style="text-align: center;">
+	<h3 class="title"><b>There are no Guilds</b></h3>
+</div>
+</xen:if>]]></template>
+  </templates>
+  <public_template_modifications/>
+  <bb_code_media_sites/>
+  <bb_codes/>
+</addon>
