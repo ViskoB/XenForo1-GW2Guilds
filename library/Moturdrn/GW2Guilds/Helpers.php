@@ -3,10 +3,7 @@ class Moturdrn_GW2Guilds_Helpers
 {
     public static function helperGuildEmblem(array $guild)
     {
-        $hash = uniqid();
-        $src = XenForo_Application::$externalDataUrl . "/Moturdrn/GW2Guilds/$guild[guildid].png?$hash";
-        
-        $guildname = htmlspecialchars($guild['guildname']);
+        $guildname = htmlspecialchars($guild['guild_name']);
         
         $src = "https://guilds.gw2w2w.com/guilds/{$guildname}/32.svg";
 
@@ -23,10 +20,10 @@ class Moturdrn_GW2Guilds_Helpers
         $baseSpan = "";
         foreach($guilds as $guild)
         {
-            $guildMember = $guildMemberModel->getMemberState($user['user_id'], $guild['guildid']);
+            $guildMember = $guildMemberModel->getMemberState($user['user_id'], $guild['guild_id']);
             if($guildMember['state'] == 'accepted') {
                 $viewMiniLink = XenForo_Link::buildPublicLink('canonical:guilds/ViewMini', $guild);
-                $baseSpan .= "\n<em class=\"userBanner guild wrapped\" itemprop=\"title\"><span class=\"before\"></span><strong><a data-href=\"$viewMiniLink\" href=\"$viewLink\" class=\"OverlayTrigger\">" . $guild['guildname'] . " [" . $guild['guildtag'] . "]</a></strong><span class=\"after\"></span></em>";
+                $baseSpan .= "\n<em class=\"userBanner guild wrapped\" itemprop=\"title\"><span class=\"before\"></span><strong><a data-href=\"$viewMiniLink\" href=\"$viewLink\" class=\"OverlayTrigger\">" . $guild['guild_name'] . " [" . $guild['guild_tag'] . "]</a></strong><span class=\"after\"></span></em>";
             }
         }
 

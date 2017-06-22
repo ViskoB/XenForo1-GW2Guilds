@@ -30,9 +30,9 @@ class Moturdrn_GW2Guilds_ControllerHelper_Guild extends XenForo_ControllerHelper
 	
 	public function getGuildOrError($guildIdOrName = null)
 	{
-		$guildId = $this->_controller->getInput()->filterSingle('guildid', XenForo_Input::UINT);
+		$guildId = $this->_controller->getInput()->filterSingle('guild_id', XenForo_Input::UINT);
 		$guildId_Legacy = $this->_controller->getInput()->filterSingle('id', XenForo_Input::UINT);
-		$guildName = $this->_controller->getInput()->filterSingle('guildname', XenForo_Input::STRING);
+		$guildName = $this->_controller->getInput()->filterSingle('guild_name', XenForo_Input::STRING);
 		
 		if($guildIdOrName === null)
 		{

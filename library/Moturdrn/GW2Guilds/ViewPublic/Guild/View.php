@@ -10,7 +10,7 @@ class Moturdrn_GW2Guilds_ViewPublic_Guild_View extends XenForo_ViewPublic_Base
 
 
 
-		$this->_params['guild']['recruitmentHtml'] = new XenForo_BbCode_TextWrapper($this->_params['guild']['guildrecruitment'], $bbCodeParser);
+		$this->_params['guild']['recruitmentHtml'] = new XenForo_BbCode_TextWrapper($this->_params['guild']['guild_recruitment'], $bbCodeParser);
 
 	}
 }

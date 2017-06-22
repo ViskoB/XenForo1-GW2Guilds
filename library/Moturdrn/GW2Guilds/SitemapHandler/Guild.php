@@ -6,7 +6,7 @@ class Moturdrn_GW2Guilds_SitemapHandler_Guild extends XenForo_SitemapHandler_Abs
 
     public function getPhraseKey($key)
     {
-        return 'moturdrn_gw2guilds_guilds';
+        return 'moturdrn_gw2guilds_guild';
     }
 
     public function getRecords($previousLast, $limit, array $viewingUser)
@@ -29,7 +29,7 @@ class Moturdrn_GW2Guilds_SitemapHandler_Guild extends XenForo_SitemapHandler_Abs
 
     public function getData(array $entry)
     {
-        $entry['title'] = XenForo_Helper_String::censorString($entry['guildname']);
+        $entry['title'] = XenForo_Helper_String::censorString($entry['guild_name']);
 
         return array(
             'loc' => XenForo_Link::buildPublicLink('canonical:guilds', $entry),

@@ -10,9 +10,9 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 
 	public function actionIndex()
 	{
-		$guildId = $this->_input->filterSingle('guildid', XenForo_Input::UINT);
+		$guildId = $this->_input->filterSingle('guild_id', XenForo_Input::UINT);
 		$guildId_Legacy = $this->_input->filterSingle('id', XenForo_Input::UINT);
-		$guildName = $this->_input->filterSingle('guildname', XenForo_Input::STRING);
+		$guildName = $this->_input->filterSingle('guild_name', XenForo_Input::STRING);
 
 		$defaultStatus = 'pending';
 
@@ -87,8 +87,8 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 
 	public function actionMine()
 	{
-		$guildId = $this->_input->filterSingle('guildid', XenForo_Input::UINT);
-		$guildName = $this->_input->filterSingle('guildname', XenForo_Input::STRING);
+		$guildId = $this->_input->filterSingle('guild_id', XenForo_Input::UINT);
+		$guildName = $this->_input->filterSingle('guild_name', XenForo_Input::STRING);
 
 		$defaultStatus = 'pending';
 
@@ -149,7 +149,7 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 	{
 		$guild = $this->_getGuildHelper()->assertGuildValid(null);
 		
-		$guildId = $guild['guildid'];
+		$guildId = $guild['guild_id'];
 		$visitor = XenForo_Visitor::getInstance();
 		
 		$guildModel = $this->_getGuildModel();
@@ -163,7 +163,7 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 
 	public function actionViewMini()
 	{
-		$guildName = $this->_input->filterSingle('guildname', XenForo_Input::STRING);
+		$guildName = $this->_input->filterSingle('guild_name', XenForo_Input::STRING);
 
 		$guildModel = $this->_getGuildModel();
 
@@ -182,7 +182,7 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 
 		$guild = $this->_getGuildHelper()->assertGuildValid(null);
 
-		$guildId = $guild['guildid'];
+		$guildId = $guild['guild_id'];
 		$visitor = XenForo_Visitor::getInstance();
 
 		$viewParams = array(
@@ -206,7 +206,7 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 
 	public function actionEdit()
 	{
-		$guildName = $this->_input->filterSingle('guildname', XenForo_Input::STRING);
+		$guildName = $this->_input->filterSingle('guild_name', XenForo_Input::STRING);
 
 		$guildModel = $this->_getGuildModel();
 
@@ -232,14 +232,14 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 	{
 		$this->_assertPostOnly();
 
-		$guildId = $this->_input->filterSingle('guildid', XenForo_Input::UINT);
+		$guildId = $this->_input->filterSingle('guild_id', XenForo_Input::UINT);
 
 		$visitor = XenForo_Visitor::getInstance();
 
 		if ($guildId)
 		{
 			$guild = $this->_getGuildHelper()->assertGuildValid($guildId);
-			$guildId = $guild['guildid'];
+			$guildId = $guild['guild_id'];
 
 			if (!$this->_getGuildModel()->canEditGuild($guild, $errorPhraseKey))
 			{
@@ -251,7 +251,7 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 			$guild = false;
 		}
 
-		$guildrecruitment = $this->getHelper('Editor')->getMessageText('guildrecruitment', $this->_input);
+		$guildrecruitment = $this->getHelper('Editor')->getMessageText('guild_recruitment', $this->_input);
 		$guildrecruitment = XenForo_Helper_String::autoLinkBbCode($guildrecruitment);
 
 		$members = $this->_input->filterSingle('members', XenForo_Input::STRING);
@@ -265,19 +265,18 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 		{
 			$writer->setExistingData($guildId);
 			$oldStatus = $writer->get('status');
-			$guildTag = $writer->get('guildtag');
+			$guildTag = $writer->get('guild_tag');
 		}
 		else
 		{
 			$oldStatus = '';
-			$guildTag = $this->_input->filterSingle('guildtag', XenForo_Input::STRING);
+			$guildTag = $this->_input->filterSingle('guild_tag', XenForo_Input::STRING);
 		}
 
 		$modified_date = strtotime("now");
 
-		$writer->set('guildrecruitment', $guildrecruitment);
-		$writer->set('guildrecruitment', $guildrecruitment);
-		$writer->set('guildwebsite', $this->_input->filterSingle('guildwebsite', XenForo_Input::STRING));
+		$writer->set('guild_recruitment', $guildrecruitment);
+		$writer->set('guild_website', $this->_input->filterSingle('guild_website', XenForo_Input::STRING));
 		$writer->set('WvW', $this->_input->filterSingle('WvW', XenForo_Input::STRING));
 		$writer->set('PvE', $this->_input->filterSingle('PvE', XenForo_Input::STRING));
 		$writer->set('PvP', $this->_input->filterSingle('PvP', XenForo_Input::STRING));
@@ -287,8 +286,8 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 
 		if (!$guildId)
 		{
-			$writer->set('guildname', $this->_input->filterSingle('guildname', XenForo_Input::STRING));
-			$writer->set('guildtag', $this->_input->filterSingle('guildtag', XenForo_Input::STRING));
+			$writer->set('guild_name', $this->_input->filterSingle('guild_name', XenForo_Input::STRING));
+			$writer->set('guild_tag', $this->_input->filterSingle('guild_tag', XenForo_Input::STRING));
 			$writer->set('status', "Pending (New)");
 			$writer->set('guildleader_userid', $visitor['user_id']);
 		}
@@ -298,27 +297,14 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 		$writer->save();
 
 		$guild = $writer->getMergedData();
-		if ($oldStatus == '')
-		{
-			/**	 @var $writer Moturdrn_GW2Guilds_DataWriter_Guild   **/
-			$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Pending');
-			$writer->set('guildid', $guild['guildid']);
-			$writer->set('user_id', $visitor['user_id']);
-			$writer->set('pendingtype', 'NewGuild');
-
-			$writer->preSave();
-
-			$writer->save();
-		}
 
 		if(!$guildId)
 		{
 			/**	 @var $writer Moturdrn_GW2Guilds_DataWriter_Guild   **/
 			$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Member');
 
-			$writer->set('guildid', $guild['guildid']);
+			$writer->set('guild_id', $guild['guild_id']);
 			$writer->set('user_id', $visitor['user_id']);
-			$writer->set('username', $visitor['username']);
 			$writer->set('state', 'accepted');
 
 			$writer->preSave();
@@ -326,7 +312,7 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 			$writer->save();
 		}
 
-		$this->leaderAddOrRemove($guild['guildleader_userid']);
+		$this->_getMemberModel()->leaderAddOrRemove($guild['guildleader_userid']);
 
 		return $this->responseRedirect(
 			XenForo_ControllerResponse_Redirect::SUCCESS,
@@ -349,9 +335,8 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 		/**	 @var $writer Moturdrn_GW2Guilds_DataWriter_Guild   **/
 		$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Member');
 
-		$writer->set('guildid', $guild['guildid']);
+		$writer->set('guild_id', $guild['guild_id']);
 		$writer->set('user_id', $visitor['user_id']);
-		$writer->set('username', $visitor['username']);
 
 		$writer->preSave();
 
@@ -373,8 +358,8 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 			throw $this->responseException($this->responseError('You cannot leave this Guild.', 400));
 
 
-		if($existingPending = $this->_getMemberModel()->getGuildMember($guild['guildid'], $visitor['user_id'])) {
-			/**     @var $writer Moturdrn_GW2Guilds_DataWriter_Pending   * */
+		if($existingPending = $this->_getMemberModel()->getGuildMember($guild['guild_id'], $visitor['user_id'])) {
+			/**     @var $writer Moturdrn_GW2Guilds_DataWriter_Member   * */
 			$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Member');
 			$writer->setExistingData($existingPending);
 			$writer->delete();
@@ -392,12 +377,12 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 		/**     @var $writer Moturdrn_GW2Guilds_DataWriter_Guild   * */
 		$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Guild');
 
-		$writer->setExistingData($guild['guildid']);
+		$writer->setExistingData($guild['guild_id']);
 
 		$writer->set('guildofficer_userids', $guildOfficers);
 		$writer->save();
 		
-		$this->accessAddOrRemove($visitor['user_id']);
+		$this->_getMemberModel()->accessAddOrRemove($visitor['user_id']);
 
 		return $this->responseRedirect(
 			XenForo_ControllerResponse_Redirect::SUCCESS,
@@ -407,7 +392,7 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 
 	public function actionRoster()
 	{
-		$guildName = $this->_input->filterSingle('guildname', XenForo_Input::STRING);
+		$guildName = $this->_input->filterSingle('guild_name', XenForo_Input::STRING);
 
 		$guildModel = $this->_getGuildModel();
 
@@ -434,7 +419,7 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 		}
 
 		$membersModel = $this->_getMemberModel();
-		$guildMembersList = $membersModel->getGuildMembers($guild['guildid']);
+		$guildMembersList = $membersModel->getGuildMembers($guild['guild_id']);
 
 		$guildOfficers = $guildMembers = array();
 		foreach($guildMembersList as $guildMember)
@@ -462,7 +447,7 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 			}
 		}
 
-		$pendingRequests = $this->_getMemberModel()->getPendingRequestsByGuildId($guild['guildid']);
+		$pendingRequests = $this->_getMemberModel()->getPendingRequestsByGuildId($guild['guild_id']);
 		$pendingMembers = array();
 		foreach($pendingRequests as $pendingRequest)
 		{
@@ -505,7 +490,7 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 		}
 
 		$memberModel = $this->_getMemberModel();
-		$guildMembersList = $memberModel->getGuildMembers($guild['guildid']);
+		$guildMembersList = $memberModel->getGuildMembers($guild['guild_id']);
 
 		$guildOfficers = $guildMembers = array();
 
@@ -535,7 +520,7 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 
 		}
 
-		$pendingRequests = $this->_getMemberModel()->getPendingRequestsByGuildId($guild['guildid']);
+		$pendingRequests = $this->_getMemberModel()->getPendingRequestsByGuildId($guild['guild_id']);
 		$pendingMembers = array();
 		foreach($pendingRequests as $pendingRequest)
 		{
@@ -588,8 +573,8 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 		if($guild['accessLevel'] < $requiredAccessLevel)
 			throw $this->responseException($this->responseError('You have insufficient permissions to remove this member.', 400));
 
-		if($existingPending = $this->_getMemberModel()->getGuildMember($guild['guildid'], $userId)) {
-			/**     @var $writer Moturdrn_GW2Guilds_DataWriter_Pending   * */
+		if($existingPending = $this->_getMemberModel()->getGuildMember($guild['guild_id'], $userId)) {
+			/**     @var $writer Moturdrn_GW2Guilds_DataWriter_Member   * */
 			$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Member');
 			$writer->setExistingData($existingPending);
 			$writer->delete();
@@ -605,12 +590,12 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 		/**     @var $writer Moturdrn_GW2Guilds_DataWriter_Guild   * */
 		$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Guild');
 
-		$writer->setExistingData($guild['guildid']);
+		$writer->setExistingData($guild['guild_id']);
 
 		$writer->set('guildofficer_userids', $guildOfficers);
 		$writer->save();
 		
-		$this->accessAddOrRemove($userId);
+		$this->_getMemberModel()->accessAddOrRemove($userId);
 
 		return $this->responseRedirect(
 			XenForo_ControllerResponse_Redirect::SUCCESS,
@@ -638,8 +623,8 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 		if($guild['accessLevel'] < $requiredAccessLevel)
 			throw $this->responseException($this->responseError('You have insufficient permissions to promote this member.', 400));
 		
-		if($existingPending = $this->_getMemberModel()->getPendingRequestByUserGuild($guild['guildid'], $userId)) {
-			/**     @var $writer Moturdrn_GW2Guilds_DataWriter_Pending   * */
+		if($existingPending = $this->_getMemberModel()->getPendingRequestByUserGuild($guild['guild_id'], $userId)) {
+			/**     @var $writer Moturdrn_GW2Guilds_DataWriter_Member   * */
 			$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Member');
 			$writer->setExistingData($existingPending);
 			$writer->set('state', 'accepted');
@@ -650,13 +635,13 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 			/**     @var $writer Moturdrn_GW2Guilds_DataWriter_Guild   * */
 			$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Guild');
 
-			$writer->setExistingData($guild['guildid']);
+			$writer->setExistingData($guild['guild_id']);
 
 			$writer->set('guildofficer_userids', $guildOfficers);
 			$writer->save();
 		}
 		
-		$this->accessAddOrRemove($userId);
+		$this->_getMemberModel()->accessAddOrRemove($userId);
 		
 		return $this->responseRedirect(
 			XenForo_ControllerResponse_Redirect::SUCCESS,
@@ -696,12 +681,12 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 		/**     @var $writer Moturdrn_GW2Guilds_DataWriter_Guild   * */
 		$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Guild');
 
-		$writer->setExistingData($guild['guildid']);
+		$writer->setExistingData($guild['guild_id']);
 
 		$writer->set('guildofficer_userids', $guildOfficers);
 		$writer->save();
 		
-		$this->accessAddOrRemove($userId);
+		$this->_getMemberModel()->accessAddOrRemove($userId);
 
 		return $this->responseRedirect(
 			XenForo_ControllerResponse_Redirect::SUCCESS,
@@ -711,7 +696,7 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 
 	public function actionTransfer()
 	{
-		$guildName = $this->_input->filterSingle('guildname', XenForo_Input::STRING);
+		$guildName = $this->_input->filterSingle('guild_name', XenForo_Input::STRING);
 
 		$guildModel = $this->_getGuildModel();
 
@@ -754,13 +739,12 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 			/*
 			 * Add new leader to the Guild if not already in
 			 */
-			if(!$this->_getMemberModel()->getGuildMember($guild['guildid'], $user['user_id']))
+			if(!$this->_getMemberModel()->getGuildMember($guild['guild_id'], $user['user_id']))
 			{
 				/**     @var $writer Moturdrn_GW2Guilds_DataWriter_Member   * */
 				$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Member');
-				$writer->set('guildid', $guild['guildid']);
+				$writer->set('guild_id', $guild['guild_id']);
 				$writer->set('user_id', $user['user_id']);
-				$writer->set('username', $user['username']);
 				$writer->set('state', 'accepted');
 				$writer->preSave();
 				$writer->save();
@@ -769,9 +753,9 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 			/*
 			 * Remove any pending join requests for the new leader to this Guild
 			 */
-			if($existingPending = $this->_getMemberModel()->getPendingRequestByUserGuild($guild['guildid'],$user['user_id']))
+			if($existingPending = $this->_getMemberModel()->getPendingRequestByUserGuild($guild['guild_id'],$user['user_id']))
 			{
-				/**     @var $writer Moturdrn_GW2Guilds_DataWriter_Pending   * */
+				/**     @var $writer Moturdrn_GW2Guilds_DataWriter_Member   * */
 				$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Member');
 				$writer->setExistingData($existingPending);
 				$writer->set('state', 'accepted');
@@ -805,7 +789,7 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 				 * Remove old leader from the usergroup
 				 */
 				$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Member');
-				$writer->setExistingData(array('guildid' => $guild['guildid'], 'user_id' => $visitor['user_id']));
+				$writer->setExistingData(array('guild_id' => $guild['guild_id'], 'user_id' => $visitor['user_id']));
 				$writer->delete();
 			}
 
@@ -816,17 +800,17 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 			/**     @var $writer Moturdrn_GW2Guilds_DataWriter_Guild   * */
 			$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Guild');
 
-			$writer->setExistingData($guild['guildid']);
+			$writer->setExistingData($guild['guild_id']);
 
 			$writer->set('guildleader_userid', $user['user_id']);
 			$writer->set('guildofficer_userids', $guildOfficers);
 			$writer->save();
 			
-			$this->leaderAddOrRemove($guild['guildleader_userid']);
-			$this->accessAddOrRemove($guild['guildleader_userid']);
+			$this->_getMemberModel()->leaderAddOrRemove($guild['guildleader_userid']);
+			$this->_getMemberModel()->accessAddOrRemove($guild['guildleader_userid']);
 			
-			$this->leaderAddOrRemove($user['user_id']);
-			$this->accessAddOrRemove($user['user_id']);
+			$this->_getMemberModel()->leaderAddOrRemove($user['user_id']);
+			$this->_getMemberModel()->accessAddOrRemove($user['user_id']);
 
 			if($user['user_id'] != $visitor['user_id'])
 			{
@@ -834,7 +818,7 @@ class Moturdrn_GW2Guilds_ControllerPublic_Guild extends XenForo_ControllerPublic
 
 				$messageText = <<<HTML
 					Hi {$user['username']},
-					Leadership of the Guild {$guild['guildname']} [{$guild['guildtag']}] has been transferred to you.
+					Leadership of the Guild {$guild['guild_name']} [{$guild['guild_tag']}] has been transferred to you.
 
 					If any of your Guild members wish to join, they may do so by first registering on this forum, then joining via the Guild system.
 
@@ -910,22 +894,22 @@ HTML;
 		if(!$guild['canEdit'])
 			return $this->responseError('You cannot add members to the roster', 400);
 
-		if($this->_getMemberModel()->getGuildMember($guild['guildid'], $user['user_id']))
+		if($this->_getMemberModel()->getGuildMember($guild['guild_id'], $user['user_id']))
 			return $this->responseError('Member already in Guild');
 
-		if($existingPending = $this->_getMemberModel()->getPendingRequestByUserGuild($guild['guildid'],$user['user_id']))
+		if($existingPending = $this->_getMemberModel()->getPendingRequestByUserGuild($guild['guild_id'],$user['user_id']))
 			return $this->responseError('Member already applied to Guild, reject or approve their request');
 
 		/**     @var $writer Moturdrn_GW2Guilds_DataWriter_Member   * */
 		$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Member');
-		$writer->set('guildid', $guild['guildid']);
+		$writer->set('guild_id', $guild['guild_id']);
 		$writer->set('user_id', $user['user_id']);
 		$writer->set('username', $user['username']);
 		$writer->set('state', 'accepted');
 		$writer->preSave();
 		$writer->save();
 		
-		$this->accessAddOrRemove($user['user_id']);
+		$this->_getMemberModel()->accessAddOrRemove($user['user_id']);
 
 		return $this->responseRedirect(
 			XenForo_ControllerResponse_Redirect::SUCCESS,
@@ -935,7 +919,7 @@ HTML;
 
 	public function actionActivate()
 	{
-		$guildName = $this->_input->filterSingle('guildname', XenForo_Input::STRING);
+		$guildName = $this->_input->filterSingle('guild_name', XenForo_Input::STRING);
 
 		$guildModel = $this->_getGuildModel();
 
@@ -965,46 +949,25 @@ HTML;
 		if(!$this->_getGuildModel()->isGW2Guildsadmin($error))
 		{
 			$dw = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Guild', XenForo_DataWriter::ERROR_SILENT);
-			$dw->setExistingData($guild['guildid']);
+			$dw->setExistingData($guild['guild_id']);
 			$dw->set('status', 'Pending (Change)');
 			$dw->save();
-
-			/**	 @var $writer Moturdrn_GW2Guilds_DataWriter_Guild   **/
-			$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Pending');
-
-			$writer->set('guildid', $guild['guildid']);
-			$writer->set('user_id', $visitor['user_id']);
-			$writer->set('pendingtype', 'ChangeGuild');
-
-			$writer->preSave();
-
-			$writer->save();
 		}
 		else {
 			$dw = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Guild', XenForo_DataWriter::ERROR_SILENT);
-			$dw->setExistingData($guild['guildid']);
+			$dw->setExistingData($guild['guild_id']);
 			$dw->set('status', 'Active');
 			$dw->save();
 
-			if($existingPending = $this->_getPendingModel()->getPendingRequestActivateByGuildId($guild['guildid']))
-			{
-				/**     @var $writer Moturdrn_GW2Guilds_DataWriter_Pending   * */
-				$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Pending');
-
-				$writer->setExistingData($existingPending['pendingid']);
-
-				$writer->delete();
-			}
-
-			$this->leaderAddOrRemove($guild['guildleader_userid']);
+			$this->_getMemberModel()->leaderAddOrRemove($guild['guildleader_userid']);
 
 			$memberModel = $this->_getMemberModel();
-			$guildMembersList = $memberModel->getGuildMembers($guild['guildid']);
+			$guildMembersList = $memberModel->getGuildMembers($guild['guild_id']);
 
 			foreach($guildMembersList as $guildMemberId)
 			{
 				$guildUser = $this->_getUserModel()->getUserById($guildMemberId['user_id'], array('join' => 0x01));
-				$this->accessAddOrRemove($guildUser['user_id']);
+				$this->_getMemberModel()->accessAddOrRemove($guildUser['user_id']);
 			}
 
 			if($guild['status'] == 'Pending (New)' && $guild['guildleader_userid'] != $visitor['user_id'])
@@ -1013,7 +976,7 @@ HTML;
 
 				$messageText = <<<HTML
 					Hi {$guildLeader['username']},
-					Your registration of the Guild {$guild['guildname']} [{$guild['guildtag']}] has been approved.
+					Your registration of the Guild {$guild['guild_name']} [{$guild['guild_tag']}] has been approved.
 
 					If any of your Guild members wish to join, they may do so by first registering on this forum, then joining via the Guild system.
 
@@ -1063,7 +1026,7 @@ HTML;
 
 				$messageText = <<<HTML
 					Hi {$guildLeader['username']},
-					The request to mark the Guild {$guild['guildname']} [{$guild['guildtag']}] as active has been approved.
+					The request to mark the Guild {$guild['guild_name']} [{$guild['guild_tag']}] as active has been approved.
 
 					If any of your Guild members wish to join, they may do so by first registering on this forum, then joining via the Guild system.
 
@@ -1113,7 +1076,7 @@ HTML;
 
 				$messageText = <<<HTML
 					Hi {$guildLeader['username']},
-					The Guild {$guild['guildname']} [{$guild['guildtag']}] has been marked as Active.
+					The Guild {$guild['guild_name']} [{$guild['guild_tag']}] has been marked as Active.
 
 					If any of your Guild members wish to join, they may do so by first registering on this forum, then joining via the Guild system.
 
@@ -1168,7 +1131,7 @@ HTML;
 
 	public function actionInactivate()
 	{
-		$guildName = $this->_input->filterSingle('guildname', XenForo_Input::STRING);
+		$guildName = $this->_input->filterSingle('guild_name', XenForo_Input::STRING);
 
 		$guildModel = $this->_getGuildModel();
 
@@ -1196,31 +1159,18 @@ HTML;
 		$visitor = XenForo_Visitor::getInstance();
 
 		$dw = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Guild', XenForo_DataWriter::ERROR_SILENT);
-		$dw->setExistingData($guild['guildid']);
+		$dw->setExistingData($guild['guild_id']);
 		$dw->set('status', 'Inactive');
 		$dw->save();
 
-		/*
-		 * Remove any pending new or change Guild requests for this Guild
-		 */
-		if($existingPending = $this->_getPendingModel()->getPendingRequestActivateByGuildId($guild['guildid']))
-		{
-			/**     @var $writer Moturdrn_GW2Guilds_DataWriter_Pending   * */
-			$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Pending');
-
-			$writer->setExistingData($existingPending['pendingid']);
-
-			$writer->delete();
-		}
-
-		$this->leaderAddOrRemove($guild['guildleader_userid']);
+		$this->_getMemberModel()->leaderAddOrRemove($guild['guildleader_userid']);
 		
 		$memberModel = $this->_getMemberModel();
-		$guildMembersList = $memberModel->getGuildMembers($guild['guildid']);
+		$guildMembersList = $memberModel->getGuildMembers($guild['guild_id']);
 		foreach($guildMembersList as $guildMember)
 		{
 			$guildUser = $this->_getUserModel()->getUserById($guildMember['user_id'], array('join' => 0x01));
-			$this->accessAddOrRemove($guildUser['user_id']);
+			$this->_getMemberModel()->accessAddOrRemove($guildUser['user_id']);
 		}
 
 		if($guild['status'] == 'Pending (Changed)' && $guild['guildleader_userid'] != $visitor['user_id'])
@@ -1229,7 +1179,7 @@ HTML;
 
 			$messageText = <<<HTML
 					Hi {$guildLeader['username']},
-					Your request to make the Guild {$guild['guildname']} [{$guild['guildtag']}] active has been rejected.
+					Your request to make the Guild {$guild['guild_name']} [{$guild['guild_tag']}] active has been rejected.
 
 					This may be due to the Guild not being active on Gunnar's Hold, or for other reasons.
 
@@ -1273,12 +1223,11 @@ HTML;
 		}
 		elseif($guild['guildleader_userid'] != $visitor['user_id'])
 		{
-			/*
 			$guildLeader = $this->_getUserModel()->getUserById($guild['guildleader_userid']);
 
 			$messageText = <<<HTML
 					Hi {$guildLeader['username']},
-					The Guild {$guild['guildname']} [{$guild['guildtag']}] has been marked as Inactive.
+					The Guild {$guild['guild_name']} [{$guild['guild_tag']}] has been marked as Inactive.
 
 					This may be due to the Guild not being active on Gunnar's Hold, or for other reasons.
 
@@ -1319,7 +1268,6 @@ HTML;
 			$this->getModelFromCache('XenForo_Model_Conversation')->markConversationAsRead(
 				$conversation['conversation_id'], XenForo_Visitor::getUserId(), XenForo_Application::$time
 			);
-			*/
 		}
 
 		return $this->responseRedirect(
@@ -1330,7 +1278,7 @@ HTML;
 
 	public function actionDelete()
 	{
-		$guildName = $this->_input->filterSingle('guildname', XenForo_Input::STRING);
+		$guildName = $this->_input->filterSingle('guild_name', XenForo_Input::STRING);
 
 		$guildModel = $this->_getGuildModel();
 
@@ -1360,45 +1308,9 @@ HTML;
 		if ($this->isConfirmedPost())
 		{
 			$dw = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Guild');
-			$dw->setExistingData($guild['guildid']);
+			$dw->setExistingData($guild['guild_id']);
 
 			$dw->delete();
-
-			/*
-			 * Remove any pending new or change Guild requests for this Guild
-			 */
-			if($existingPending = $this->_getPendingModel()->getPendingRequestActivateByGuildId($guild['guildid']))
-			{
-				/**     @var $writer Moturdrn_GW2Guilds_DataWriter_Pending   * */
-				$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Pending');
-
-				$writer->setExistingData($existingPending['pendingid']);
-
-				$writer->delete();
-			}
-
-			$this->leaderAddOrRemove($guild['guildleader_userid']);
-			
-			$guildMembersList = $this->_getMemberModel()->getGuildMembers($guild['guildid']);
-			foreach($guildMembersList as $guildMember)
-			{
-				$guildUser = $this->_getUserModel()->getUserById($guildMember['user_id'], array('join' => 0x01));
-				$this->accessAddOrRemove($guildUser['user_id']);
-			}
-
-			/*
-			 * Remove the Guild Roster
-			 */
-			if($guildRoster = $this->_getMemberModel()->getGuildMembers($guild['guildid']))
-			{
-				/**     @var $writer Moturdrn_GW2Guilds_DataWriter_Pending   * */
-				$writer = XenForo_DataWriter::create('Moturdrn_GW2Guilds_DataWriter_Member');
-				foreach($guildRoster as $guildMember)
-				{
-					$writer->setExistingData($guildMember);
-					$writer->delete();
-				}
-			}
 
 			if($guild['status'] == 'Pending (New)' && $guild['guildleader_userid'] != $visitor['user_id'])
 			{
@@ -1406,7 +1318,7 @@ HTML;
 
 				$messageText = <<<HTML
 					Hi {$guildLeader['username']},
-					Your registration of the Guild {$guild['guildname']} [{$guild['guildtag']}] has been rejected.
+					Your registration of the Guild {$guild['guild_name']} [{$guild['guild_tag']}] has been rejected.
 
 					This may be due to the Guild not being active on Gunnar's Hold, or for other reasons.
 
@@ -1450,12 +1362,11 @@ HTML;
 			}
 			elseif($guild['guildleader_userid'] != $visitor['user_id'])
 			{
-				/*
 				$guildLeader = $this->_getUserModel()->getUserById($guild['guildleader_userid']);
 
 				$messageText = <<<HTML
 					Hi {$guildLeader['username']},
-					The Guild {$guild['guildname']} [{$guild['guildtag']}] has been deleted from our database.
+					The Guild {$guild['guild_name']} [{$guild['guild_tag']}] has been deleted from our database.
 
 					This may be due to the Guild no longer being active on Gunnar's Hold, or for other reasons.
 
@@ -1496,11 +1407,7 @@ HTML;
 				$this->getModelFromCache('XenForo_Model_Conversation')->markConversationAsRead(
 					$conversation['conversation_id'], XenForo_Visitor::getUserId(), XenForo_Application::$time
 				);
-				*/
 			}
-
-			$emblem = XenForo_Application::$externalDataUrl . "/Moturdrn/GW2Guilds/$guild[guildid].png";
-			unlink($emblem);
 
 			return $this->responseRedirect(
 				XenForo_ControllerResponse_Redirect::SUCCESS,
@@ -1518,134 +1425,6 @@ HTML;
 		}
 	}
 
-	public function leaderAddOrRemove($userId)
-	{
-		$userModel = $this->_getUserModel();
-		$user = $userModel->getUserById($userId);
-
-		if($user)
-		{
-			$guildModel = $this->_getGuildModel();
-			$activeGuilds = $guildModel->getActiveGuildsWhereLeader($userId);
-
-			if($activeGuilds)
-			{
-				$this->addSecondaryGroup($userId, self::GUILD_LEADER_GROUP_ID);
-			}
-			else
-			{
-				$this->removeSecondaryGroup($userId, self::GUILD_LEADER_GROUP_ID);
-			}
-		}
-	}
-	
-	public function accessAddOrRemove($userId)
-	{
-		$userModel = $this->_getUserModel();
-		$user = $userModel->getUserById($userId);
-		
-		if($user)
-		{
-			$guildModel = $this->_getGuildModel();
-			$activeGuilds = $guildModel->getActiveGuildsOfUser($userId);
-			
-			if($activeGuilds)
-			{
-				$this->addSecondaryGroup($userId, self::ACCESS_GROUP_ID);
-			}
-			else
-			{
-				$this->removeSecondaryGroup($userId, self::ACCESS_GROUP_ID);
-			}
-		}
-	}
-
-	private function addSecondaryGroup($userId, $groupId)
-	{
-		$userModel = $this->_getUserModel();
-		$userGroupModel = $this->_getUserGroupModel();
-
-		$user = $userModel->getUserById($userId);
-		$userGroup = $userGroupModel->getUserGroupById($groupId);
-
-		if($user && $userGroup)
-		{
-			if(!$userModel->isMemberOfUserGroup($user, $groupId))
-			{
-				$secondaryGroups = explode(",", $user['secondary_group_ids']);
-				$secondaryGroups[] = $groupId;
-				$writer = XenForo_DataWriter::create('XenForo_DataWriter_User');
-				$writer->setExistingData($user['user_id']);
-				$writer->setSecondaryGroups($secondaryGroups);
-				$writer->save();
-			}
-		}
-	}
-
-	private function removeSecondaryGroup($userId, $groupId)
-	{
-		$userModel = $this->_getUserModel();
-		$userGroupModel = $this->_getUserGroupModel();
-
-		$user = $userModel->getUserById($userId);
-		$userGroup = $userGroupModel->getUserGroupById($groupId);
-
-		if($user && $userGroup)
-		{
-			if($userModel->isMemberOfUserGroup($user, $groupId))
-			{
-				$secondaryGroups = explode(",", $user['secondary_group_ids']);
-				if(($key = array_search($groupId, $secondaryGroups)) !== false)
-				{
-					unset($secondaryGroups[$key]);
-				}
-				$writer = XenForo_DataWriter::create('XenForo_DataWriter_User');
-				$writer->setExistingData($user['user_id']);
-				$writer->setSecondaryGroups($secondaryGroups);
-				$writer->save();
-			}
-		}
-	}
-
-	public function actionSetGuildLeaders()
-	{
-		$guildModel = $this->_getGuildModel();
-		if(!$guildModel->isGW2GuildsAdmin($error))
-		{
-			throw $this->responseException($this->responseError('You have insufficient permissions to do this.', 400));
-		}
-
-		$guilds = $guildModel->getGuilds();
-		foreach($guilds as $guild)
-		{
-			$this->leaderAddOrRemove($guild['guildleader_userid']);
-		}
-
-		return $this->responseRedirect(
-			XenForo_ControllerResponse_Redirect::SUCCESS,
-			XenForo_Link::buildPublicLink('guilds', ''),
-			'Guilds Updated'
-		);
-	}
-
-	public function actionGuildUpgrade()
-	{
-		$guildModel = $this->_getGuildModel();
-
-		$guilds = $guildModel->getGuilds();
-		foreach($guilds as $guild)
-		{
-			$writer = XenForo_DataWriter::create('XenForo_DataWriter_UserGroup');
-			$writer->setExistingData($guild['user_group_id']);
-			$writer->delete();
-		}
-		return $this->responseRedirect(
-			XenForo_ControllerResponse_Redirect::SUCCESS,
-			XenForo_Link::buildPublicLink('guilds', ''),
-			'Guilds System Upgraded'
-		);
-	}
-
 	/**
 	 * Session activity details.
 	 * @see XenForo_Controller::getSessionActivityDetailsForList()
@@ -1656,17 +1435,18 @@ HTML;
 		$guildNames = array();
 		foreach ($activities as $activity)
 		{
-			if (!empty($activity['params']['guildid']))
+			if (!empty($activity['params']['guild_id']))
 			{
-				$guildIds[$activity['params']['guildid']] = intval($activity['params']['guildid']);
+				$guildIds[$activity['params']['guild_id']] = intval($activity['params']['guild_id']);
 			}
 
-			if (!empty($activity['params']['guildname']))
+			if (!empty($activity['params']['guild_name']))
 			{
-				$guildNames[$activity['params']['guildname']] = $activity['params']['guildname'];
+				$guildNames[$activity['params']['guild_name']] = $activity['params']['guild_name'];
 			}
 		}
 
+		/** @var Moturdrn_GW2Guilds_Model_Guild $guildModel */
 		$guildModel = XenForo_Model::create('Moturdrn_GW2Guilds_Model_Guild');
 		if ($guildNames)
 		{
@@ -1684,8 +1464,8 @@ HTML;
 
 			foreach ($guilds as $guild)
 			{
-				$guildData[$guild['guildid']] = array(
-					'guildname' =>  $guild['guildname'],
+				$guildData[$guild['guild_id']] = array(
+					'guild_name' =>  $guild['guild_name'],
 					'url' => XenForo_Link::buildPublicLink('guilds', $guild)
 				);
 			}
@@ -1696,17 +1476,17 @@ HTML;
 		{
 			$guild = false;
 			$list = false;
-			if (!empty($activity['params']['guildid']))
+			if (!empty($activity['params']['guild_id']))
 			{
-				$guildID = $activity['params']['guildid'];
+				$guildID = $activity['params']['guild_id'];
 				if (isset($guildData[$guildID]))
 				{
 					$guild = $guildData[$guildID];
 				}
 			}
-			else if (!empty($activity['params']['guildname']))
+			else if (!empty($activity['params']['guild_name']))
 			{
-				$guildname = $activity['params']['guildname'];
+				$guildname = $activity['params']['guild_name'];
 				if (isset($guildNames[$guildname]))
 				{
 					$guildID = $guildNames[$guildname];
@@ -1730,7 +1510,7 @@ HTML;
 						break;
 					case 'Add':
 						$action = 'Adding Guild';
-						$guild['guildname'] = '';
+						$guild['guild_name'] = '';
 						$guild['url'] = '';
 						break;
 					case 'Edit':
@@ -1745,7 +1525,7 @@ HTML;
 			{
 				$output[$key] = array(
 					$action,
-					$guild['guildname'],
+					$guild['guild_name'],
 					$guild['url'],
 					false
 				);
@@ -1759,14 +1539,24 @@ HTML;
 		return $output;
 	}
 
+    /**
+     * @return Moturdrn_GW2Guilds_Model_Guild
+     */
 	protected function _getGuildModel()
 	{
-		return $this->getModelFromCache('Moturdrn_GW2Guilds_Model_Guild');
+	    /** @var Moturdrn_GW2Guilds_Model_Guild $model */
+		$model = $this->getModelFromCache('Moturdrn_GW2Guilds_Model_Guild');
+		return $model;
 	}
 
+    /**
+     * @return Moturdrn_GW2Guilds_Model_Member
+     */
 	protected function _getMemberModel()
 	{
-		return $this->getModelFromCache('Moturdrn_GW2Guilds_Model_Member');
+	    /** @var Moturdrn_GW2Guilds_Model_Member $model */
+		$model = $this->getModelFromCache('Moturdrn_GW2Guilds_Model_Member');
+		return $model;
 	}
 	
 	protected function _getGuildHelper()
@@ -1774,9 +1564,14 @@ HTML;
 		return $this->getHelper('Moturdrn_GW2Guilds_ControllerHelper_Guild');
 	}
 
+    /**
+     * @return Moturdrn_GW2Guilds_Model_Pending
+     */
 	protected function _getPendingModel()
 	{
-		return $this->getModelFromCache('Moturdrn_GW2Guilds_Model_Pending');
+	    /** @var Moturdrn_GW2Guilds_Model_Pending $model */
+		$model = $this->getModelFromCache('Moturdrn_GW2Guilds_Model_Pending');
+		return $model;
 	}
 
 	protected function _getGuildAddOrEditResponse(array $guild)
@@ -1805,7 +1600,9 @@ HTML;
 	 */
 	protected function _getUserGroupModel()
 	{
-		return $this->getModelFromCache('XenForo_Model_UserGroup');
+	    /** @var XenForo_Model_UserGroup $model */
+		$model = $this->getModelFromCache('XenForo_Model_UserGroup');
+		return $model;
 	}
 
 	/**
@@ -1815,7 +1612,9 @@ HTML;
 	 */
 	protected function _getUserModel()
 	{
-		return $this->getModelFromCache('XenForo_Model_User');
+	    /** @var XenForo_Model_User $model */
+		$model = $this->getModelFromCache('XenForo_Model_User');
+		return $model;
 	}
 
 	/**
@@ -1825,7 +1624,9 @@ HTML;
 	 */
 	protected function _getPermissionModel()
 	{
-		return $this->getModelFromCache('XenForo_Model_Permission');
+	    /** @var XenForo_Model_Permission $model */
+	    $model = $this->getModelFromCache('XenForo_Model_Permission');
+	    return $model;
 	}
 
 	protected function _getNodeModel()

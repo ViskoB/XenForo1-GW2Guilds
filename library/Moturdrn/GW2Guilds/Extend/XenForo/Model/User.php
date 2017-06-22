@@ -9,7 +9,7 @@ class Moturdrn_GW2Guilds_Extend_XenForo_Model_User extends XFCP_Moturdrn_GW2Guil
 
         $selectFields .= ',guild_members.guild_ids';
         $joinTables .= '
-                    LEFT JOIN (select group_concat(guildid) as guild_ids, user_id from `xf_moturdrn_gw2guilds_members` group by user_id) AS guild_members ON (guild_members.user_id = user.user_id)';
+                    LEFT JOIN (select group_concat(guild_id) as guild_ids, user_id from `xf_moturdrn_gw2guilds_member` group by user_id) AS guild_members ON (guild_members.user_id = user.user_id)';
 
         return compact('selectFields', 'joinTables');
     }

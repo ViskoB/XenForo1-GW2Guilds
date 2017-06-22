@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="Moturdrn_GW2Guilds" title="[Moturdrn] GW2 Guilds" version_string="1.1.5" version_id="1015" url="" install_callback_class="Moturdrn_GW2Guilds_Installer" install_callback_method="install" uninstall_callback_class="Moturdrn_GW2Guilds_Installer" uninstall_callback_method="uninstall">
+<addon addon_id="Moturdrn_GW2Guilds" title="[Moturdrn] GW2 Guilds" version_string="1.1.7" version_id="1017" url="" install_callback_class="Moturdrn_GW2Guilds_Installer" install_callback_method="install" uninstall_callback_class="Moturdrn_GW2Guilds_Installer" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -64,21 +64,21 @@
   </route_prefixes>
   <style_properties/>
   <templates>
-    <template title="alert_moturdrn_gw2guildsmember_join" version_id="1015" version_string="1.1.5"><![CDATA[{xen:phrase moturdrn_gw2guilds_x_sending_request_to_join_guild_y,
+    <template title="alert_moturdrn_gw2guilds_changeguild" version_id="1016" version_string="1.1.6"><![CDATA[{xen:phrase moturdrn_gw2guilds_x_requests_guild_y_active,
 	'user={xen:helper username, $user, 'subject'}',
-	'title=<a href="{xen:link 'guilds/roster', {$extra.guild}}" class="PopupItemLink">{$extra.guild.guidname} [{$extra.guild.guildtag}]</a>'}]]></template>
-    <template title="alert_moturdrn_gw2guilds_change" version_id="1015" version_string="1.1.5"><![CDATA[{xen:phrase moturdrn_gw2guilds_x_requests_guild_y_active,
+	'title=<a href="{xen:link 'guilds'}" class="PopupItemLink">{$extra.guild.guild_name} [{$extra.guild.guild_tag}]</a>'}]]></template>
+    <template title="alert_moturdrn_gw2guilds_joinreq" version_id="1016" version_string="1.1.6"><![CDATA[{xen:phrase moturdrn_gw2guilds_x_sending_request_to_join_guild_y,
 	'user={xen:helper username, $user, 'subject'}',
-	'title=<a href="{xen:link 'guilds'}" class="PopupItemLink">{$extra.guild.guidname} [{$extra.guild.guildtag}]</a>'}]]></template>
-    <template title="alert_moturdrn_gw2guilds_new" version_id="1015" version_string="1.1.5"><![CDATA[{xen:phrase moturdrn_gw2guilds_x_created_guild_y,
+	'title=<a href="{xen:link 'guilds/roster', {$extra.guild}}" class="PopupItemLink">{$extra.guild.guild_name} [{$extra.guild.guild_tag}]</a>'}]]></template>
+    <template title="alert_moturdrn_gw2guilds_newguild" version_id="1016" version_string="1.1.6"><![CDATA[{xen:phrase moturdrn_gw2guilds_x_created_guild_y,
 	'user={xen:helper username, $user, 'subject'}',
-	'title=<a href="{xen:link 'guilds'}" class="PopupItemLink">{$extra.guild.guidname} [{$extra.guild.guildtag}]</a>'}
+	'title=<a href="{xen:link 'guilds'}" class="PopupItemLink">{$extra.guild.guild_name} [{$extra.guild.guild_tag}]</a>'}
 ]]></template>
-    <template title="moturdrn_gw2guilds_add" version_id="1009" version_string="1.0.9"><![CDATA[<xen:title>{xen:if '{$guild.guildid}', 'Edit Guild: {$guild.guidname}', 'Add New Guild'}</xen:title>
+    <template title="moturdrn_gw2guilds_add" version_id="1016" version_string="1.1.6"><![CDATA[<xen:title>{xen:if '{$guild.guild_id}', 'Edit Guild: {$guild.guild_name}', 'Add New Guild'}</xen:title>
 
-<xen:if is="{$guild.guildid}">
+<xen:if is="{$guild.guild_id}">
 	<xen:navigation>
-		<xen:breadcrumb href="{xen:link canonical:guilds, $guild}">{$guild.guidname} [{$guild.guildtag}]</xen:breadcrumb>
+		<xen:breadcrumb href="{xen:link canonical:guilds, $guild}">{$guild.guild_name} [{$guild.guild_tag}]</xen:breadcrumb>
 		<xen:breadcrumb href="{xen:link canonical:guilds/edit, $guild}">{xen:phrase moturdrn_gw2guilds_edit_guild}</xen:breadcrumb>
 	</xen:navigation>
 <xen:else />
@@ -88,13 +88,13 @@
 </xen:if>
 <div style="background-color: {xen:property contentBackground};">
 <form action="{xen:link canonical:guilds/save, $guild}" method="post" class="AutoValidator xenForm" data-redirect="on">
-	<xen:if is="!{$guild.guildid}">
+	<xen:if is="!{$guild.guild_id}">
 	<fieldset>	
 		<dl class="ctrlUnit titleUnit">
 			<dt><label for="ctrl_title">Guild Name:</label></dt>
 			<dd>
-				<input type="text" name="guidname" value="{$guild.guidname}" class="textCtrl OptOut"
-					data-liveTitleTemplate="{xen:if $guild.guildid, 'Edit Guild', 'Add New Guild'}: <em>%s</em>"
+				<input type="text" name="guild_name" value="{$guild.guild_name}" class="textCtrl OptOut"
+					data-liveTitleTemplate="{xen:if $guild.guild_id, 'Edit Guild', 'Add New Guild'}: <em>%s</em>"
 					id="ctrl_title_team_add" maxlength="100"
 				/>
 				<p class="explain">{xen:phrase moturdrn_gw2guilds_the_name_of_your_guild}</p>
@@ -104,7 +104,7 @@
 		<dl class="ctrlUnit">
 			<dt><label for="ctrl_tag_line">Guild Tag:</label></dt>
 			<dd>
-				<input type="text" name="guildtag" value="{$guild.guildtag}" class="textCtrl OptOut" id="ctrl_tag_line" maxlength="100" />
+				<input type="text" name="guild_tag" value="{$guild.guild_tag}" class="textCtrl OptOut" id="ctrl_tag_line" maxlength="100" />
 				<p class="explain">{xen:phrase moturdrn_gw2guilds_your_guilds_tag}</p>
 			</dd>
 		</dl>
@@ -112,17 +112,17 @@
 		<dl class="ctrlUnit">
 			<dt><label for="ctrl_tag_line">Website:</label></dt>
 			<dd>
-				<input type="text" name="guildwebsite" value="{$guild.guildwebsite}" class="textCtrl OptOut" id="ctrl_tag_line" maxlength="100" />
+				<input type="text" name="guild_website" value="{$guild.guild_website}" class="textCtrl OptOut" id="ctrl_tag_line" maxlength="100" />
 				<p class="explain">{xen:phrase moturdrn_gw2guilds_your_guilds_website}</p>
 			</dd>
 		</dl>
 	</fieldset>
 	<xen:else />
-		<input type="hidden" name="guildid" value="{$guild.guildid}" />
+		<input type="hidden" name="guild_id" value="{$guild.guild_id}" />
 		<dl class="ctrlUnit">
 			<dt><label for="ctrl_tag_line">Website:</label></dt>
 			<dd>
-				<input type="text" name="guildwebsite" value="{$guild.guildwebsite}" class="textCtrl OptOut" id="ctrl_tag_line" maxlength="100" />
+				<input type="text" name="guild_website" value="{$guild.guild_website}" class="textCtrl OptOut" id="ctrl_tag_line" maxlength="100" />
 				<p class="explain">{xen:phrase moturdrn_gw2guilds_your_guilds_website}</p>
 			</dd>
 		</dl>
@@ -154,25 +154,25 @@
 		<dl class="ctrlUnit">
 			<dt><label for="ctrl_message">PvE:</label></dt>
 			<dd>
-				No: <input type="radio" name="PvE" value="N" <xen:if is="{$guild.PvE} == 'N' || !{$guild.guildid}">checked</xen:if> /> Yes: <input type="radio" name="PvE" value="Y" <xen:if is="{$guild.PvE} == 'Y'">checked</xen:if> />
+				No: <input type="radio" name="PvE" value="N" <xen:if is="{$guild.PvE} == 'N' || !{$guild.guild_id}">checked</xen:if> /> Yes: <input type="radio" name="PvE" value="Y" <xen:if is="{$guild.PvE} == 'Y'">checked</xen:if> />
 			</dd>
 		</dl>
 		<dl class="ctrlUnit">
 			<dt><label for="ctrl_message">PvP:</label></dt>
 			<dd>
-				No: <input type="radio" name="PvP" value="N" <xen:if is="{$guild.PvP} == 'N' || !{$guild.guildid}">checked</xen:if> /> Yes: <input type="radio" name="PvP" value="Y" <xen:if is="{$guild.PvP} == 'Y'">checked</xen:if> />
+				No: <input type="radio" name="PvP" value="N" <xen:if is="{$guild.PvP} == 'N' || !{$guild.guild_id}">checked</xen:if> /> Yes: <input type="radio" name="PvP" value="Y" <xen:if is="{$guild.PvP} == 'Y'">checked</xen:if> />
 			</dd>
 		</dl>
 		<dl class="ctrlUnit">
 			<dt><label for="ctrl_message">WvW:</label></dt>
 			<dd>
-				No: <input type="radio" name="WvW" value="N" <xen:if is="{$guild.WvW} == 'N' || !{$guild.guildid}">checked</xen:if> /> Yes: <input type="radio" name="WvW" value="Y" <xen:if is="{$guild.WvW} == 'Y'">checked</xen:if> />
+				No: <input type="radio" name="WvW" value="N" <xen:if is="{$guild.WvW} == 'N' || !{$guild.guild_id}">checked</xen:if> /> Yes: <input type="radio" name="WvW" value="Y" <xen:if is="{$guild.WvW} == 'Y'">checked</xen:if> />
 			</dd>
 		</dl>
 		<dl class="ctrlUnit">
 			<dt><label for="ctrl_message">Casual:</label></dt>
 			<dd>
-				No: <input type="radio" name="Casual" value="N" <xen:if is="{$guild.Casual} == 'N' || !{$guild.guildid}">checked</xen:if> /> Yes: <input type="radio" name="Casual" value="Y" <xen:if is="{$guild.Casual} == 'Y'">checked</xen:if> />
+				No: <input type="radio" name="Casual" value="N" <xen:if is="{$guild.Casual} == 'N' || !{$guild.guild_id}">checked</xen:if> /> Yes: <input type="radio" name="Casual" value="Y" <xen:if is="{$guild.Casual} == 'Y'">checked</xen:if> />
 			</dd>
 		</dl>
 	</fieldset>
@@ -196,10 +196,10 @@
 	<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
 </form>
 </div>]]></template>
-    <template title="moturdrn_gw2guilds_delete" version_id="1009" version_string="1.0.9"><![CDATA[<xen:title>Delete Guild: {$guild.guidname} [{$guild.guildtag}]</xen:title>
+    <template title="moturdrn_gw2guilds_delete" version_id="1016" version_string="1.1.6"><![CDATA[<xen:title>Delete Guild: {$guild.guild_name} [{$guild.guild_tag}]</xen:title>
 
 <xen:navigation>
-	<xen:breadcrumb href="{xen:link canonical:guilds, $guild}">{$guild.guidname}</xen:breadcrumb>
+	<xen:breadcrumb href="{xen:link canonical:guilds, $guild}">{$guild.guild_name}</xen:breadcrumb>
 	<xen:breadcrumb href="{xen:link canonical:guilds/delete, $guild}">{xen:phrase moturdrn_gw2guilds_delete_guild}</xen:breadcrumb>
 </xen:navigation>
 
@@ -209,7 +209,7 @@
 		<dd>
 			{xen:helper guildemblem, $guild}
 			<br />
-			{$guild.guidname} [{$guild.guildtag}]
+			{$guild.guild_name} [{$guild.guild_tag}]
 		</dd>
 	</dl>
 
@@ -221,7 +221,7 @@
 	<input type="hidden" name="_xfConfirm" value="1" />
 	<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
 </form>]]></template>
-    <template title="moturdrn_gw2guilds_guild_list_item" version_id="1004" version_string="1.0.4"><![CDATA[<li class="GuildListItem {$guild.status}" id="guild-{$guild.guildid}">
+    <template title="moturdrn_gw2guilds_guild_list_item" version_id="1016" version_string="1.1.6"><![CDATA[<li class="GuildListItem {$guild.status}" id="guild-{$guild.guild_id}">
 	<div class="listBlock GuildImage">
 		<div class="listBlockInner">
 			{xen:helper guildemblem, $guild}
@@ -231,14 +231,14 @@
 	<div class="listBlock main">
 		<div class="listBlockInner">
 			<h3 class="title">
-				<a name="guild-{$guild.guildid}"></a><a href="{xen:link canonical:guilds, $guild}" class="TeamIcon">{$guild.guidname}</a>
+				<a name="guild-{$guild.guild_id}"></a><a href="{xen:link canonical:guilds, $guild}" class="TeamIcon">{$guild.guild_name}</a>
 				<div class="guildTitle">
-					[{$guild.guildtag}]
+					[{$guild.guild_tag}]
 				</div>
 			</h3>
-			<xen:if is="{$guild.guildwebsite}">
+			<xen:if is="{$guild.guild_website}">
 				<div class="tagLine">
-					<a href="{$guild.guildwebsite}">{$guild.guildwebsite}</a>
+					<a href="{$guild.guild_website}">{$guild.guild_website}</a>
 				</div>
 			</xen:if>
 			<div class="tagLine">
@@ -288,13 +288,13 @@
 </li>
 <li></li>
 <xen:require css="moturdrn_gw2guilds_list.css" />]]></template>
-    <template title="moturdrn_gw2guilds_guild_list_pending_item" version_id="1004" version_string="1.0.4"><![CDATA[<xen:require css="moturdrn_gw2guilds_member.css" />
-<li id="guild-{$guild.guildid}-{$user.user_id}" class="primaryContent memberListItem guildMemberListItem">
+    <template title="moturdrn_gw2guilds_guild_list_pending_item" version_id="1016" version_string="1.1.6"><![CDATA[<xen:require css="moturdrn_gw2guilds_member.css" />
+<li id="guild-{$guild.guild_id}-{$user.user_id}" class="primaryContent memberListItem guildMemberListItem">
 	<div class="userAvatar">
 		{xen:helper guildemblem, $guild}
 	</div>
 	<div class="memberInfo">
-		<h3 class="title">{$guild.guidname} [{$guild.guildtag}]</h3>
+		<h3 class="title">{$guild.guild_name} [{$guild.guild_tag}]</h3>
 		<div class="tagLine muted">{$guild.status}
 		<xen:if is="{$controlAction}">
 			<div class="controlAction">
@@ -680,8 +680,8 @@
 	position: relative;
 	top: -2px;
 }]]></template>
-    <template title="moturdrn_gw2guilds_member_list_item" version_id="1002" version_string="1.0.2"><![CDATA[<xen:require css="moturdrn_gw2guilds_member.css" />
-<li id="member-{$guild.guildid}-{$user.user_id}" class="primaryContent memberListItem guildMemberListItem">
+    <template title="moturdrn_gw2guilds_member_list_item" version_id="1016" version_string="1.1.6"><![CDATA[<xen:require css="moturdrn_gw2guilds_member.css" />
+<li id="member-{$guild.guild_id}-{$user.user_id}" class="primaryContent memberListItem guildMemberListItem">
 	<div class="userAvatar">
 		<xen:avatar user="$user" size="m" img="true" />
 	</div>
@@ -720,7 +720,7 @@
 	</ol>
 </div>
 </div>]]></template>
-    <template title="moturdrn_gw2guilds_mine_list_item" version_id="1004" version_string="1.0.4"><![CDATA[<li class="GuildListItem {$guild.status}" id="guild-{$guild.guildid}">
+    <template title="moturdrn_gw2guilds_mine_list_item" version_id="1016" version_string="1.1.6"><![CDATA[<li class="GuildListItem {$guild.status}" id="guild-{$guild.guild_id}">
 	<div class="listBlock GuildImage">
 		<div class="listBlockInner">
 			{xen:helper guildemblem, $guild}
@@ -729,14 +729,14 @@
 	<div class="listBlock main">
 		<div class="listBlockInner">
 			<h3 class="title">
-				<a name="guild-{$guild.guildid}"></a><a href="{xen:link canonical:guilds, $guild}" class="TeamIcon">{$guild.guidname}</a>
+				<a name="guild-{$guild.guild_id}"></a><a href="{xen:link canonical:guilds, $guild}" class="TeamIcon">{$guild.guild_name}</a>
 				<div class="guildTitle">
-					[{$guild.guildtag}]
+					[{$guild.guild_tag}]
 				</div>
 			</h3>
-			<xen:if is="{$guild.guildwebsite}">
+			<xen:if is="{$guild.guild_website}">
 				<div class="tagLine">
-					<a href="{$guild.guildwebsite}">{$guild.guildwebsite}</a>
+					<a href="{$guild.guild_website}">{$guild.guild_website}</a>
 				</div>
 			</xen:if>
 			<div class="tagLine">
@@ -786,9 +786,9 @@
 </li>
 <li></li>
 <xen:require css="Moturdrn_GW2Guilds_List.css" />]]></template>
-    <template title="moturdrn_gw2guilds_roster" version_id="1008" version_string="1.0.8"><![CDATA[<xen:title>{$guild.guidname} [{$guild.guildtag}]</xen:title>
+    <template title="moturdrn_gw2guilds_roster" version_id="1016" version_string="1.1.6"><![CDATA[<xen:title>{$guild.guild_name} [{$guild.guild_tag}]</xen:title>
 <xen:navigation>
-	<xen:breadcrumb href="{xen:link canonical:guilds, $guild}">{$guild.guidname} [{$guild.guildtag}]</xen:breadcrumb>
+	<xen:breadcrumb href="{xen:link canonical:guilds, $guild}">{$guild.guild_name} [{$guild.guild_tag}]</xen:breadcrumb>
 	<xen:breadcrumb href="{xen:link canonical:guilds/roster, $guild}">Roster</xen:breadcrumb>
 </xen:navigation>
 <xen:require css="moturdrn_gw2guilds_list.css" />
@@ -804,14 +804,14 @@
 			<div class="listBlock main">
 				<div class="listBlockInner">
 					<h3 class="title">
-						<a name="guild-{$guild.guildid}"></a><a href="{xen:link canonical:guilds, $guild}" class="TeamIcon">{$guild.guidname}</a>
+						<a name="guild-{$guild.guild_id}"></a><a href="{xen:link canonical:guilds, $guild}" class="TeamIcon">{$guild.guild_name}</a>
 						<div class="guildTitle">
-							[{$guild.guildtag}]
+							[{$guild.guild_tag}]
 						</div>
 					</h3>
-					<xen:if is="{$guild.guildwebsite}">
+					<xen:if is="{$guild.guild_website}">
 						<div class="tagLine">
-							<a href="{$guild.guildwebsite}">{$guild.guildwebsite}</a>
+							<a href="{$guild.guild_website}">{$guild.guild_website}</a>
 						</div>
 					</xen:if>
 					<xen:if is="!{$Mini}">
@@ -967,10 +967,10 @@
 </div>
 </div>
 </div>]]></template>
-    <template title="moturdrn_gw2guilds_transfer" version_id="1009" version_string="1.0.9"><![CDATA[<xen:title>Transfer Guild: {$guild.guidname} [{$guild.guildtag}]</xen:title>
+    <template title="moturdrn_gw2guilds_transfer" version_id="1016" version_string="1.1.6"><![CDATA[<xen:title>Transfer Guild: {$guild.guild_name} [{$guild.guild_tag}]</xen:title>
 
 <xen:navigation>
-	<xen:breadcrumb href="{xen:link canonical:guilds, $guild}">{$guild.guidname}</xen:breadcrumb>
+	<xen:breadcrumb href="{xen:link canonical:guilds, $guild}">{$guild.guild_name}</xen:breadcrumb>
 	<xen:breadcrumb href="{xen:link canonical:guilds/transfer, $guild}">{xen:phrase moturdrn_gw2guilds_transfer_guild}</xen:breadcrumb>
 </xen:navigation>
 
@@ -980,7 +980,7 @@
 		<dd>
 			{xen:helper guildemblem, $guild}
 			<br />
-			{$guild.guidname} [{$guild.guildtag}]
+			{$guild.guild_name} [{$guild.guild_tag}]
 		</dd>
 	</dl>
 	<dl class="ctrlUnit">
@@ -997,9 +997,9 @@
 	<input type="hidden" name="_xfConfirm" value="1" />
 	<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
 </form>]]></template>
-    <template title="moturdrn_gw2guilds_view" version_id="1004" version_string="1.0.4"><![CDATA[<xen:title>{$guild.guidname} [{$guild.guildtag}]</xen:title>
+    <template title="moturdrn_gw2guilds_view" version_id="1016" version_string="1.1.6"><![CDATA[<xen:title>{$guild.guild_name} [{$guild.guild_tag}]</xen:title>
 <xen:navigation>
-	<xen:breadcrumb href="{xen:link canonical:guilds, $guild}">{$guild.guidname} [{$guild.guildtag}]</xen:breadcrumb>
+	<xen:breadcrumb href="{xen:link canonical:guilds, $guild}">{$guild.guild_name} [{$guild.guild_tag}]</xen:breadcrumb>
 </xen:navigation>
 <xen:require css="moturdrn_gw2guilds_list.css" />
 <div class="GuildListBlock" style="background-color: {xen:property contentBackground};">
@@ -1014,14 +1014,14 @@
 			<div class="listBlock main">
 				<div class="listBlockInner">
 					<h3 class="title">
-						<span class="TeamIcon">{$guild.guidname}</span>
+						<span class="TeamIcon">{$guild.guild_name}</span>
 						<div class="guildTitle">
-							[{$guild.guildtag}]
+							[{$guild.guild_tag}]
 						</div>
 					</h3>
-					<xen:if is="{$guild.guildwebsite}">
+					<xen:if is="{$guild.guild_website}">
 						<div class="tagLine">
-							<a href="{$guild.guildwebsite}">{$guild.guildwebsite}</a>
+							<a href="{$guild.guild_website}">{$guild.guild_website}</a>
 						</div>
 					</xen:if>
 					<div class="tagLine">
@@ -1076,9 +1076,9 @@
 	</ol>
 </div>
 </div>]]></template>
-    <template title="moturdrn_gw2guilds_view_mini" version_id="1004" version_string="1.0.4"><![CDATA[<xen:title>{$guild.guidname} [{$guild.guildtag}]</xen:title>
+    <template title="moturdrn_gw2guilds_view_mini" version_id="1016" version_string="1.1.6"><![CDATA[<xen:title>{$guild.guild_name} [{$guild.guild_tag}]</xen:title>
 <xen:navigation>
-	<xen:breadcrumb href="{xen:link canonical:guilds, $guild}">{$guild.guidname} [{$guild.guildtag}]</xen:breadcrumb>
+	<xen:breadcrumb href="{xen:link canonical:guilds, $guild}">{$guild.guild_name} [{$guild.guild_tag}]</xen:breadcrumb>
 </xen:navigation>
 <xen:require css="moturdrn_gw2guilds_list.css" />
 <div class="GuildListBlock" style="background-color: {xen:property contentBackground};">
@@ -1093,14 +1093,14 @@
 			<div class="listBlock main">
 				<div class="listBlockInner">
 					<h3 class="title">
-						<span class="TeamIcon">{$guild.guidname}</span>
+						<span class="TeamIcon">{$guild.guild_name}</span>
 						<div class="guildTitle">
-							[{$guild.guildtag}]
+							[{$guild.guild_tag}]
 						</div>
 					</h3>
-					<xen:if is="{$guild.guildwebsite}">
+					<xen:if is="{$guild.guild_website}">
 						<div class="tagLine">
-							<a href="{$guild.guildwebsite}">{$guild.guildwebsite}</a>
+							<a href="{$guild.guild_website}">{$guild.guild_website}</a>
 						</div>
 					</xen:if>
 				</div>
@@ -1136,10 +1136,10 @@
 	</ol>
 </div>
 </div>]]></template>
-    <template title="moturdrn_gw2guilds_widget" version_id="1011" version_string="1.1.1"><![CDATA[<xen:if is="{$guild}">
+    <template title="moturdrn_gw2guilds_widget" version_id="1016" version_string="1.1.6"><![CDATA[<xen:if is="{$guild}">
 <div style="text-align: center;">
 	{xen:helper guildemblem, $guild}<br />
-	<h3 class="title"><a data-href="{xen:link canonical:guilds/ViewMini, $guild}" href="{xen:link canonical:guilds, $guild}" class="OverlayTrigger"><b>{$guild.guidname} [{$guild.guildtag}]</b></a></h3>
+	<h3 class="title"><a data-href="{xen:link canonical:guilds/ViewMini, $guild}" href="{xen:link canonical:guilds, $guild}" class="OverlayTrigger"><b>{$guild.guild_name} [{$guild.guild_tag}]</b></a></h3>
 </div>
 <table style="text-align: center; width: 100%;">
 	<tr>

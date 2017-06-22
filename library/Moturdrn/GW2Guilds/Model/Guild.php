@@ -4,7 +4,7 @@ class Moturdrn_GW2Guilds_Model_Guild extends XenForo_Model
 {
 	public function getGuildById($guildId)
 	{
-		return $this->_getDb()->fetchRow('SELECT * FROM xf_moturdrn_gw2guilds_guilds WHERE guildid = ?', $guildId);
+		return $this->_getDb()->fetchRow('SELECT * FROM xf_moturdrn_gw2guilds_guild WHERE guild_id = ?', $guildId);
 	}
 
 	public function getGuildsPendingByIds(array $guildIds)
@@ -16,9 +16,9 @@ class Moturdrn_GW2Guilds_Model_Guild extends XenForo_Model
 
 		return $this->fetchAllKeyed('
 			SELECT guild.*
-			FROM xf_moturdrn_gw2guilds_guilds AS guild
-			WHERE guild.guildid IN (' . $this->_getDb()->quote($guildIds) . ')
-		 AND guild.status LIKE \'Pending%\'', 'guildid');
+			FROM xf_moturdrn_gw2guilds_guild AS guild
+			WHERE guild.guild_id IN (' . $this->_getDb()->quote($guildIds) . ')
+		 AND guild.status LIKE \'Pending%\'', 'guild_id');
 	}
 
 	public function getGuildsByIds(array $guildIds)
@@ -30,14 +30,14 @@ class Moturdrn_GW2Guilds_Model_Guild extends XenForo_Model
 
 		return $this->fetchAllKeyed('
 			SELECT guild.*
-			FROM xf_moturdrn_gw2guilds_guilds AS guild
-			WHERE guild.guildid IN (' . $this->_getDb()->quote($guildIds) . ')
-		', 'guildid');
+			FROM xf_moturdrn_gw2guilds_guild AS guild
+			WHERE guild.guild_id IN (' . $this->_getDb()->quote($guildIds) . ')
+		', 'guild_id');
 	}
 	
 	public function getGuildByName($guildName)
 	{
-		return $this->_getDb()->fetchRow('SELECT * FROM xf_moturdrn_gw2guilds_guilds WHERE guildname = ?', $guildName);
+		return $this->_getDb()->fetchRow('SELECT * FROM xf_moturdrn_gw2guilds_guild WHERE guild_name = ?', $guildName);
 	}
 	
 	public function getGuilds($conditions = null)
@@ -45,51 +45,51 @@ class Moturdrn_GW2Guilds_Model_Guild extends XenForo_Model
 		$whereClause = $this->prepareGuildConditions($conditions);
 		return $this->fetchAllKeyed($this->limitQueryResults('
 			SELECT *
-				FROM (SELECT *, 1 AS Rank FROM xf_moturdrn_gw2guilds_guilds WHERE status = \'Active\' OR status LIKE \'Pending%\'
+				FROM (SELECT *, 1 AS Rank FROM xf_moturdrn_gw2guilds_guild WHERE status = \'Active\' OR status LIKE \'Pending%\'
 			UNION ALL
 			SELECT *, 2 AS Rank
-				FROM xf_moturdrn_gw2guilds_guilds WHERE status = \'Inactive\') guilds
-			ORDER BY guilds.Rank, guilds.guildname ASC', 0),'guildid');
+				FROM xf_moturdrn_gw2guilds_guild WHERE status = \'Inactive\') guilds
+			ORDER BY guilds.Rank, guilds.guild_name ASC', 0),'guild_id');
 	}
 
 	public function getActiveGuilds()
 	{
 		return $this->fetchAllKeyed($this->limitQueryResults('
 			SELECT *
-			FROM xf_moturdrn_gw2guilds_guilds
-			 WHERE status = \'Active\' AND guildid != 115', 0),'guildid');
+			FROM xf_moturdrn_gw2guilds_guild
+			 WHERE status = \'Active\' AND guild_id != 115', 0),'guild_id');
 	}
 
 	public function getGuildsOfUser($userId){
 		return $this->fetchAllKeyed($this->limitQueryResults(
 			'SELECT g.*
-				FROM xf_moturdrn_gw2guilds_members as m
-				JOIN xf_moturdrn_gw2guilds_guilds as g on g.guildid = m.guildid
+				FROM xf_moturdrn_gw2guilds_member as m
+				JOIN xf_moturdrn_gw2guilds_guild as g on g.guild_id = m.guild_id
 				WHERE m.user_id = ' . $this->_getDb()->quote($userId),0),'user_id');
 	}
 	
 	public function getActiveGuildsOfUser($userId){
 		return $this->fetchAllKeyed($this->limitQueryResults(
 			'SELECT g.*
-				FROM xf_moturdrn_gw2guilds_members as m
-				JOIN xf_moturdrn_gw2guilds_guilds as g on g.guildid = m.guildid
+				FROM xf_moturdrn_gw2guilds_member as m
+				JOIN xf_moturdrn_gw2guilds_guild as g on g.guild_id = m.guild_id
 				WHERE g.status = \'Active\' AND m.user_id = ' . $this->_getDb()->quote($userId),0),'user_id');
 	}
 
 	public function getGuildsOfUserCount($userId){
 		return $this->_getDb()->fetchRow(
 			'SELECT count(*) as GuildCount
-				FROM xf_moturdrn_gw2guilds_members as m
-				JOIN xf_moturdrn_gw2guilds_guilds as g on g.guildid = m.guildid
+				FROM xf_moturdrn_gw2guilds_member as m
+				JOIN xf_moturdrn_gw2guilds_guild as g on g.guild_id = m.guild_id
 				WHERE m.user_id = ?',$userId);
 	}
 
 	public function getGuildsIdsFromNames(array $names)
 	{
 		return $this->_getDb()->fetchPairs('
-			SELECT guildname, guildid
-			FROM xf_moturdrn_gw2guilds_guilds
-			WHERE guildname IN (' . $this->_getDb()->quote($names) . ')
+			SELECT guild_name, guild_id
+			FROM xf_moturdrn_gw2guilds_guild
+			WHERE guild_name IN (' . $this->_getDb()->quote($names) . ')
 		');
 	}
 
@@ -97,22 +97,22 @@ class Moturdrn_GW2Guilds_Model_Guild extends XenForo_Model
 	{
 		return $this->fetchAllKeyed($this->limitQueryResults('
 			SELECT *
-				FROM xf_moturdrn_gw2guilds_guilds
-				WHERE status = \'Active\' AND guildleader_userid = ' . $this->_getDb()->quote($userId),0),'guildid');
+				FROM xf_moturdrn_gw2guilds_guild
+				WHERE status = \'Active\' AND guildleader_userid = ' . $this->_getDb()->quote($userId),0),'guild_id');
 	}
 
 	public function getPendingGuilds($conditions = null)
 	{
 		return $this->fetchAllKeyed($this->limitQueryResults(
-			'SELECT * FROM xf_moturdrn_gw2guilds_guilds AS guild WHERE status like \'Pending%\' ORDER BY guildname ASC', 0),'guildid');
+			'SELECT * FROM xf_moturdrn_gw2guilds_guild AS guild WHERE status like \'Pending%\' ORDER BY guild_name ASC', 0),'guild_id');
 	}
 
 	public function getPendingGuildsCount(){
-		return $this->_getDb()->fetchRow('SELECT count(*) as PendingCount FROM xf_moturdrn_gw2guilds_guilds AS guild WHERE guild.status LIKE \'Pending%\'');
+		return $this->_getDb()->fetchRow('SELECT count(*) as PendingCount FROM xf_moturdrn_gw2guilds_guild AS guild WHERE guild.status LIKE \'Pending%\'');
 	}
 
 	public function getPendingRequestsCountById($guildId){
-		return $this->_getDb()->fetchRow('SELECT count(*) as RequestCount FROM xf_moturdrn_gw2guilds_pending AS pending WHERE pending.guildid=?',$guildId);
+		return $this->_getDb()->fetchRow('SELECT count(*) as RequestCount FROM xf_moturdrn_gw2guilds_pending AS pending WHERE pending.guild_id=?',$guildId);
 	}
 
 	public function getGuildIdsInRange($start, $limit)
@@ -120,10 +120,10 @@ class Moturdrn_GW2Guilds_Model_Guild extends XenForo_Model
 		$db = $this->_getDb();
 
 		return $db->fetchCol($db->limit('
-			SELECT guildid
-			FROM xf_moturdrn_gw2guilds_guilds
-			WHERE guildid > ?
-			ORDER BY guildid
+			SELECT guild_id
+			FROM xf_moturdrn_gw2guilds_guild
+			WHERE guild_id > ?
+			ORDER BY guild_id
 		', $limit), $start);
 	}
 	
@@ -138,13 +138,13 @@ class Moturdrn_GW2Guilds_Model_Guild extends XenForo_Model
 		$guild['canTransfer'] = $this->canTransferGuild($guild, $null, $viewingUser);
 		$guild['accessLevel'] = $this->guildAccessLevel($guild, $null, $viewingUser);
 
-		$guildMembers = $this->_getMemberModel()->getGuildMembers($guild['guildid']);
+		$guildMembers = $this->_getMemberModel()->getGuildMembers($guild['guild_id']);
 		if(count($guildMembers) > 0)
 			$guild['member_count'] = count($guildMembers);
 		else
 			$guild['member_count'] = 0;
 
-		$pendingRequests = $this->getPendingRequestsCountById($guild['guildid']);
+		$pendingRequests = $this->getPendingRequestsCountById($guild['guild_id']);
 		$guild['pending_count'] = $pendingRequests['RequestCount'];
 
 		return $guild;
@@ -286,7 +286,7 @@ class Moturdrn_GW2Guilds_Model_Guild extends XenForo_Model
 			return false;
 		}
 
-		if($this->_getMemberModel()->getGuildMember($guild['guildid'],$viewingUser['user_id']))
+		if($this->_getMemberModel()->getGuildMember($guild['guild_id'],$viewingUser['user_id']))
 			return false;
 
 		if(XenForo_Permission::hasPermission($viewingUser['permissions'], 'moturdrn_gw2guilds', 'joinguild'))
@@ -314,7 +314,7 @@ class Moturdrn_GW2Guilds_Model_Guild extends XenForo_Model
 			return false;
 		}
 
-		if($this->_getMemberModel()->getGuildMember($guild['guildid'],$viewingUser['user_id']))
+		if($this->_getMemberModel()->getGuildMember($guild['guild_id'],$viewingUser['user_id']))
 			return true;
 
 		return false;
@@ -404,10 +404,10 @@ class Moturdrn_GW2Guilds_Model_Guild extends XenForo_Model
 				return 30;
 		}
 
-		if($this->_getMemberModel()->getActiveGuildMember($guild['guildid'],$viewingUser['user_id']))
+		if($this->_getMemberModel()->getActiveGuildMember($guild['guild_id'],$viewingUser['user_id']))
 			return 20;
 
-		if($this->_getMemberModel()->getPendingRequestByUserGuild($guild['guildid'],$viewingUser['user_id']))
+		if($this->_getMemberModel()->getPendingRequestByUserGuild($guild['guild_id'],$viewingUser['user_id']))
 			return 10;
 
 		return 0;
@@ -433,9 +433,16 @@ class Moturdrn_GW2Guilds_Model_Guild extends XenForo_Model
 		return false;
 	}
 
-	protected function _getMemberModel()
+    /**
+     * Gets the user group model.
+     *
+     * @return Moturdrn_GW2Guilds_Model_Member
+     */
+    protected function _getMemberModel()
 	{
-		return $this->getModelFromCache('Moturdrn_GW2Guilds_Model_Member');
+	    /** @var Moturdrn_GW2Guilds_Model_Member $model */
+	    $model = XenForo_Model::create('Moturdrn_GW2Guilds_Model_Member');
+	    return $model;
 	}
 
 	/**
@@ -445,7 +452,9 @@ class Moturdrn_GW2Guilds_Model_Guild extends XenForo_Model
 	 */
 	protected function _getUserGroupModel()
 	{
-		return $this->getModelFromCache('XenForo_Model_UserGroup');
+        /** @var XenForo_Model_UserGroup $model */
+        $model = XenForo_Model::create('XenForo_Model_UserGroup');
+        return $model;
 	}
 
 	/**
@@ -455,6 +464,8 @@ class Moturdrn_GW2Guilds_Model_Guild extends XenForo_Model
 	 */
 	protected function _getUserModel()
 	{
-		return $this->getModelFromCache('XenForo_Model_User');
+        /** @var XenForo_Model_User $model */
+        $model = XenForo_Model::create('XenForo_Model_User');
+        return $model;
 	}
 }
